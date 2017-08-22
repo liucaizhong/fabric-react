@@ -1,50 +1,29 @@
-/* eslint-disable */
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { LocaleProvider } from 'antd';
-import { addLocaleData, IntlProvider } from 'react-intl';
-import App from './components/App';
-import registerServiceWorker from './registerServiceWorker';
-import './index.less';
+import React from 'react'
+import { render } from 'react-dom'
+import { LocaleProvider } from 'antd'
+import { addLocaleData, IntlProvider } from 'react-intl'
+import { Provider } from 'react-redux'
+import configureStore from './configureStore'
+import configureAppLocale from './configureAppLocale'
+import App from './pages/App'
+import registerServiceWorker from './registerServiceWorker'
+import './index.less'
 
-// get language
-const lang = (navigator.language || navigator.browserLanguage).toLowerCase();
-let appLocale;
+// set locale langage data
+const appLocale = configureAppLocale()
+addLocaleData(appLocale.data)
 
-if (lang.includes('zh')) {
-  const appLocaleData = require('react-intl/locale-data/zh');
-  const zhMessages = require('./locales/zh');
+// declare a redux store
+const store = configureStore()
 
-  appLocale = Object.assign({}, {
-    messages: {
-      ...zhMessages,
-    },
-    antd: null,
-    locale: 'zh-CN',
-    data: appLocaleData,
-  });
-} else {
-  const antdEn = require('antd/lib/locale-provider/en_US');
-  const appLocaleData = require('react-intl/locale-data/en');
-  const enMessages = require('./locales/en');
-
-  appLocale = Object.assign({}, {
-    messages: {
-      ...enMessages,
-    },
-    antd: antdEn,
-    locale: 'en-US',
-    data: appLocaleData,
-  });
-}
-addLocaleData(appLocale.data);
-
-ReactDOM.render(
+render(
   <LocaleProvider locale={appLocale.antd}>
     <IntlProvider locale={appLocale.locale} messages={appLocale.messages}>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </IntlProvider>
   </LocaleProvider>,
-  document.getElementById('root')
-);
-registerServiceWorker();
+  document.getElementById('root'),
+)
+registerServiceWorker()

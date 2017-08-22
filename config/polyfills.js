@@ -12,8 +12,13 @@ if (typeof Promise === 'undefined') {
 require('whatwg-fetch');
 
 // add babel-polyfill for compatibility
-require("babel-polyfill");
+require('babel-polyfill');
+
+// a polyfill of the ES6 Promise
+// require('es6-promise').polyfill();
 
 // Object.assign() is commonly used with React.
 // It will use the native implementation if it's present and isn't buggy.
-Object.assign = require('object-assign');
+if (Object.assign === 'undefined') {
+  Object.assign = require('object-assign');
+}

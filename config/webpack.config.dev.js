@@ -12,6 +12,7 @@ const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
+const theme = require('./theme');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
@@ -243,7 +244,7 @@ module.exports = {
           {
             loader: require.resolve('less-loader'),
             options: {
-              modifyVars: { "@primary-color": "#1DA57A" },
+              modifyVars: theme,
             },
           },
         ],
