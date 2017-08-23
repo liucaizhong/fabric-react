@@ -23,7 +23,7 @@ export default function configureAppLocale() {
     }
     case 1: {
       // support further
-      // const antdEn = require('antd/lib/locale-provider/en_US')
+      // const antdEn = require('antd-mobile/lib/locale-provider/en_US')
       // const appLocaleData = require('react-intl/locale-data/en')
       // const enMessages = require('./locales/en_us')
       //

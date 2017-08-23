@@ -9,8 +9,6 @@ const asyncComponent = importComponent => {
       this.state = {
         component: null,
       }
-
-      this.onMount = this.onMount.bind(this)
     }
 
     async componentDidMount() {

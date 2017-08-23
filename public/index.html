@@ -26,11 +26,20 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Expires" content="0" />
     <title>Conf Management</title>
+    <!-- antm-viewport.min.js -->
+    <script type="text/javascript" src="%PUBLIC_URL%/antm-viewport.min.js"></script>
+    <!-- fastclick.min.js -->
+    <script type="text/javascript" src="%PUBLIC_URL%/fastclick.js"></script>
     <script>
-        if (!window.Intl) {
-            document.writeln('<script src="https://as.alipayobjects.com/g/component/intl/1.0.1/Intl.js">' + '<' + '/script>');
-            document.writeln('<script src="https://as.alipayobjects.com/g/component/intl/1.0.1/locale-data/jsonp/zh.js">' + '<' + '/script>');
-        }
+      if ('addEventListener' in document) {
+        document.addEventListener('DOMContentLoaded', function() {
+          FastClick.attach(document.body);
+        }, false);
+      }
+
+      if(!window.Promise) {
+        document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"'+'>'+'<'+'/'+'script>');
+      }
     </script>
   </head>
   <body>

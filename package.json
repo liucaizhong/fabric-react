@@ -3,9 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "antd": "^2.12.3",
+    "antd-mobile": "^1.6.3",
     "autoprefixer": "7.1.1",
-    "axios": "^0.16.2",
     "babel-core": "6.25.0",
     "babel-eslint": "7.2.3",
     "babel-jest": "20.0.3",
@@ -44,6 +43,7 @@
     "react-transition-group": "^2.2.0",
     "redux": "^3.7.2",
     "redux-saga": "^0.15.6",
+    "reselect": "^3.0.1",
     "style-loader": "0.18.2",
     "sw-precache-webpack-plugin": "0.11.3",
     "url-loader": "0.5.9",
@@ -103,6 +103,8 @@
     "friendly-errors-webpack-plugin": "^1.6.1",
     "less": "^2.7.2",
     "less-loader": "^4.0.5",
-    "progress-bar-webpack-plugin": "^1.10.0"
+    "postcss-pxtorem": "^4.0.1",
+    "progress-bar-webpack-plugin": "^1.10.0",
+    "svg-sprite-loader": "^3.2.4"
   }
 }

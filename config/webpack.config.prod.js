@@ -1,6 +1,7 @@
 'use strict';
 
 const autoprefixer = require('autoprefixer');
+const pxtorem = require('postcss-pxtorem');
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -140,6 +141,7 @@ module.exports = {
           /\.(js|jsx)$/,
           /\.css$/,
           /\.less$/,
+          /\.svg$/,
           /\.json$/,
           /\.bmp$/,
           /\.gif$/,
@@ -168,7 +170,7 @@ module.exports = {
         loader: require.resolve('babel-loader'),
         options: {
           plugins: [
-            ['import', { libraryName: 'antd', style: true }],
+            ['import', { libraryName: 'antd-mobile', style: true }],
           ],
           compact: true,
         },
@@ -230,6 +232,14 @@ module.exports = {
       // ** STOP ** Are you adding a new loader?
       // Remember to add the new extension(s) to the "file" loader exclusion list.
       {
+        test: /\.(svg)$/i,
+        loader: 'svg-sprite-loader',
+        include: [
+          require.resolve('antd-mobile').replace(/warn\.js$/, ''),  // 1. svg files of antd-mobile
+          // path.resolve(__dirname, 'src/my-project-svg-foler'),  // folder of svg files in your project
+        ]
+      },
+      {
         test: /\.less$/,
         use: [
           require.resolve('style-loader'),
@@ -239,16 +249,10 @@ module.exports = {
             options: {
               ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options
               plugins: () => [
-                require('postcss-flexbugs-fixes'),
                 autoprefixer({
-                  browsers: [
-                    '>1%',
-                    'last 4 versions',
-                    'Firefox ESR',
-                    'not ie < 9', // React doesn't support IE8 anyway
-                  ],
-                  flexbox: 'no-2009',
+                  browsers: ['last 2 versions', 'Firefox ESR', '> 1%', 'ie >= 8', 'iOS >= 8', 'Android >= 4'],
                 }),
+                pxtorem({ rootValue: 100, propWhiteList: [] })
               ],
             },
           },

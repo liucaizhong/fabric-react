@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { LocaleProvider } from 'antd'
+import { LocaleProvider } from 'antd-mobile'
 import { addLocaleData, IntlProvider } from 'react-intl'
 import { Provider } from 'react-redux'
 import configureStore from './configureStore'
