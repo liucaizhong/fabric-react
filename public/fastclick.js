@@ -144,6 +144,18 @@
 				}
 			};
 
+			// Test via a getter in the options object to see
+			// if the passive property is accessed
+			var supportsPassive = false;
+			try {
+			  var opts = Object.defineProperty({}, 'passive', {
+			    get: function() {
+			      supportsPassive = true;
+			    }
+			  });
+			  window.addEventListener('test', null, opts);
+			} catch (e) {}
+
 			layer.addEventListener = function(type, callback, capture) {
 				var adv = Node.prototype.addEventListener;
 				if (type === 'click') {
@@ -151,9 +163,15 @@
 						if (!event.propagationStopped) {
 							callback(event);
 						}
-					}), capture);
+					}), supportsPassive ? {
+						passive: true,
+						capture: capture
+					} : capture);
 				} else {
-					adv.call(layer, type, callback, capture);
+					adv.call(layer, type, callback, supportsPassive ? {
+						passive: true,
+						capture: capture
+					} : capture);
 				}
 			};
 		}

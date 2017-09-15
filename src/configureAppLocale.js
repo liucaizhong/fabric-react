@@ -1,3 +1,4 @@
+import moment from 'moment'
 import LANGS from './locales/langList'
 
 // get language
@@ -11,6 +12,8 @@ export default function configureAppLocale() {
     case 0: {
       const appLocaleData = require('react-intl/locale-data/zh')
       const zhMessages = require('./locales/zh_cn')
+      const momentData = require('moment/locale/zh-cn')
+      moment.updateLocale('zh-cn', momentData)
 
       return Object.assign({}, {
         messages: {
@@ -39,6 +42,8 @@ export default function configureAppLocale() {
     default: {
       const appLocaleData = require('react-intl/locale-data/zh')
       const zhMessages = require('./locales/zh_cn')
+      const momentData = require('moment/locale/zh-cn')
+      moment.updateLocale('zh-cn', momentData)
 
       return Object.assign({}, {
         messages: {

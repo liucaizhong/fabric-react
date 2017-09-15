@@ -1,14 +1,10 @@
 // used to lazy load components asynchronously
 import React from 'react'
 
-const asyncComponent = importComponent => {
+const asyncComponent = (importComponent) => {
   class AsyncComponent extends React.Component {
-    constructor(props) {
-      super(props)
-
-      this.state = {
-        component: null,
-      }
+    state = {
+      component: null,
     }
 
     async componentDidMount() {

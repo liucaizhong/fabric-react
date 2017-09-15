@@ -1,10 +1,16 @@
 // home page
 import React from 'react'
+import PropTypes from 'prop-types'
+import HomeTabBar from '../components/HomeTabBar'
 
-const Home = () => (
+const Home = ({ history }) => (
   <div>
-    Home Page!
+    <HomeTabBar history={history} />
   </div>
 )
+
+Home.propTypes = {
+  history: PropTypes.object.isRequired,
+}
 
 export default Home
