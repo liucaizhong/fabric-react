@@ -28,6 +28,8 @@ class CompApplication extends Component {
   }
 
   render() {
+    const { onChange, onSubmit } = this.props
+
     return (
       <div>
         <NavBar
@@ -46,6 +48,8 @@ class CompApplication extends Component {
               key="0"
               show={this.state.showSearchBar}
               toggleBar={this.onToggleSearchBar.bind(this)}
+              onSubmit={onSubmit}
+              onChange={onChange}
             />,
             <Icon
               key="1"
@@ -62,7 +66,7 @@ class CompApplication extends Component {
             <Link
               key="2"
               to={{
-                pathname: '/edit-comp-apply',
+                pathname: '/register-comp',
                 state: {
                   editing: true,
                 },
@@ -88,6 +92,8 @@ class CompApplication extends Component {
 
 CompApplication.propTypes = {
   history: PropTypes.object.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 }
 
 export default CompApplication

@@ -7,9 +7,9 @@ import {
 } from '../actions/index'
 
 const mapStateToProps = (state) => {
-  const { isConfAdmin } = state.loginUser
+  const { roleId } = state.loginUser
   return {
-    isConfAdmin,
+    roleId,
   }
 }
 

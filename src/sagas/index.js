@@ -8,11 +8,12 @@ function* setUser() {
     name: '刘蔡仲',
     comp: '东方证券研究所',
     // avatar: require('../assets/images/login-avatar.png'),
-    isConfAdmin: true,
+    // 0: admin, 1: analyst, 2: sales
+    roleId: 0,
   }))
 }
 
-// fetch get meeting list
+// fetch get
 function fetchGet(url, config) {
   return fetch(url, config)
   .then((resp) => {
@@ -76,11 +77,47 @@ function* submitMeeting(action) {
   }, {}))
 }
 
+// load comp list
+function* watchLoadCompList() {
+  yield takeLatest(TYPES.GET_COMP_LIST, loadCompList)
+}
+
+function* loadCompList(action) {
+  const { url, config } = action
+
+  const data = yield call(fetchGet, url, config)
+
+  yield put(Object.assign({
+    type: TYPES.LOAD_COMP_LIST,
+  }, {
+    data,
+  }))
+}
+
+// load user list
+function* watchLoadUserList() {
+  yield takeLatest(TYPES.GET_USER_LIST, loadUserList)
+}
+
+function* loadUserList(action) {
+  const { url, config } = action
+
+  const data = yield call(fetchGet, url, config)
+
+  yield put(Object.assign({
+    type: TYPES.LOAD_USER_LIST,
+  }, {
+    data,
+  }))
+}
+
 export default function* rootSaga() {
   yield all([
     call(setUser),
     call(watchLoadMeetingList),
     call(watchSubmitMeeting),
     call(watchLoadCompApplyList),
+    call(watchLoadCompList),
+    call(watchLoadUserList),
   ])
 }

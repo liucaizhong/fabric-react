@@ -3,10 +3,13 @@ import HomeMeetingList from '../components/HomeMeetingList'
 import { getMeetingList, setCurMeetingInfo } from '../actions/index'
 
 const mapStateToProps = (state) => {
+  const { roleId } = state.loginUser
+
   return {
     meetingList: state.meetingList,
     statusFilter: state.meetingStatusFilter,
     contentFilter: state.meetingContentFilter,
+    roleId,
   }
 }
 

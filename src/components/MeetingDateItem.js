@@ -169,6 +169,8 @@ class MeetingDateItem extends Component {
           }}
           value={this.state.start ? moment(this.state.start, 'HH:mm') : ''}
           minuteStep={15}
+          minDate={moment('9:00', 'HH:mm')}
+          maxDate={moment('18:00', 'HH:mm')}
         >
           <List.Item className={this.state.error[0] ? 'error' : ''} />
         </DatePicker>
@@ -186,6 +188,8 @@ class MeetingDateItem extends Component {
           }}
           value={this.state.end ? moment(this.state.end, 'HH:mm') : ''}
           minuteStep={15}
+          minDate={moment('9:00', 'HH:mm')}
+          maxDate={moment('18:00', 'HH:mm')}
         >
           <List.Item className={this.state.error[0] ? 'error' : ''} />
         </DatePicker>

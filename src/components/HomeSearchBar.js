@@ -29,7 +29,7 @@ class HomeSearchBar extends Component {
   }
 
   render() {
-    const { intl, onChange, onSubmit, isConfAdmin, onClickLink } = this.props
+    const { intl, onChange, onSubmit, roleId, onClickLink } = this.props
     const { showFilterMenu } = this.state
 
     return (
@@ -44,7 +44,7 @@ class HomeSearchBar extends Component {
           className="home-searchbar__input"
         />
         {
-          isConfAdmin ?
+          !roleId ?
             <div
               className="home-searchbar__btn"
             >
@@ -98,12 +98,8 @@ HomeSearchBar.propTypes = {
   intl: intlShape.isRequired,
   onChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  isConfAdmin: PropTypes.bool,
+  roleId: PropTypes.number.isRequired,
   onClickLink: PropTypes.func.isRequired,
-}
-
-HomeSearchBar.defaultProps = {
-  isConfAdmin: false,
 }
 
 export default injectIntl(HomeSearchBar)

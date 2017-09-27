@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { SearchBar, Icon } from 'antd-mobile'
 import { injectIntl, intlShape } from 'react-intl'
 
@@ -18,7 +19,7 @@ class CustomSearchBar extends Component {
   }
 
   render() {
-    const { intl, toggleBar } = this.props
+    const { intl, toggleBar, placeholder, onChange, onSubmit } = this.props
 
     return (
       <div style={{
@@ -30,23 +31,20 @@ class CustomSearchBar extends Component {
           type={require('../assets/icons/left-back.svg')}
           role="button"
           onClick={(e) => {
-            // clear search filter
             toggleBar(this.state.show)
           }}
           size="xs"
         />
         <SearchBar
-          key="0"
           className="custom-search-bar"
           placeholder={intl.formatMessage({
-            id: 'CustomSearchBar.placeholder',
+            id: placeholder,
           })}
-          maxLength={20}
           cancelText={intl.formatMessage({
             id: 'Common.cancel',
           })}
-          onChange={() => {}}
-          onSubmit={() => {}}
+          onChange={onChange}
+          onSubmit={onSubmit}
         />
       </div>
     )
@@ -55,6 +53,16 @@ class CustomSearchBar extends Component {
 
 CustomSearchBar.propTypes = {
   intl: intlShape.isRequired,
+  placeholder: PropTypes.string,
+  toggleBar: PropTypes.func.isRequired,
+  show: PropTypes.bool,
+  onChange: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+}
+
+CustomSearchBar.defaultProps = {
+  placeholder: 'CustomSearchBar.placeholder',
+  show: true,
 }
 
 export default injectIntl(CustomSearchBar)

@@ -5,7 +5,7 @@ import { addLocaleData, IntlProvider } from 'react-intl'
 import { Provider } from 'react-redux'
 import configureStore from './configureStore'
 import configureAppLocale from './configureAppLocale'
-import App from './pages/App'
+import App from './routes/App'
 import registerServiceWorker from './registerServiceWorker'
 import './index.less'
 

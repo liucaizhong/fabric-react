@@ -93,7 +93,7 @@ class HomeMeetingList extends Component {
 
     switch (statusStep) {
       case 0:
-        history.push('/comp-apply')
+        history.push('/apply')
         break
       default:
     }
@@ -101,7 +101,7 @@ class HomeMeetingList extends Component {
   }
 
   render() {
-    const { getMeetingList, clickLink } = this.props
+    const { getMeetingList, clickLink, roleId } = this.props
 
     const separator = (sectionID, rowID) => (
       <div
@@ -134,10 +134,10 @@ class HomeMeetingList extends Component {
                   clickLink(rowData)
                 }}
               >
-                <Icon
+                {!roleId ? <Icon
                   type={require('../assets/icons/edit-meeting.svg')}
                   size="xs"
-                />
+                /> : null}
               </Link>
             </div>
             <p className="Home-meetingList__row-desc">{rowData.desc}</p>
@@ -158,7 +158,7 @@ class HomeMeetingList extends Component {
           this.setState({
             showHeader: false,
           })
-        }, 1000)
+        }, 500)
 
         return typeof this.state.showHeader === 'boolean'
         ? (
@@ -276,6 +276,7 @@ HomeMeetingList.propTypes = {
   history: PropTypes.object.isRequired,
   statusFilter: PropTypes.array.isRequired,
   contentFilter: PropTypes.string.isRequired,
+  roleId: PropTypes.number.isRequired,
 }
 
 export default injectIntl(HomeMeetingList)

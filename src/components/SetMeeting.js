@@ -23,12 +23,6 @@ class SetMeeting extends Component {
     }
   }
 
-  // componentDidMount() {
-  //   const { loadCurMeetingInfo } = this.props
-  //   if (location.state) {
-  //     loadCurMeetingInfo(location.state)
-  //   }
-  // }
   onChangeName(name) {
     this.setState({
       name,
@@ -121,10 +115,6 @@ class SetMeeting extends Component {
       title: intl.formatMessage({
         id: 'Meeting.Status.text4',
       }),
-    }, {
-      title: intl.formatMessage({
-        id: 'Meeting.Status.text5',
-      }),
     }]
 
     return (
@@ -208,6 +198,26 @@ class SetMeeting extends Component {
               <FormattedMessage id="SetMeeting.listText2" />
             </List.Item>
           </DatePicker>
+          <List.Item
+            extra={
+              this.state.rooms && this.state.rooms.length ?
+                <FormattedMessage
+                  id="SetMeeting.listExtraText3"
+                  values={{
+                    num: this.state.rooms.length,
+                  }}
+                />
+              : <FormattedMessage
+                id="SetMeeting.listExtraText4"
+              />
+            }
+            onClick={() => {
+              this.history.push('/set-room')
+              this.history.goForward()
+            }}
+          >
+            <FormattedMessage id="SetMeeting.listText3" />
+          </List.Item>
           <List.Item>
             <SetMeetingStatus
               currentStep={this.state.statusStep}

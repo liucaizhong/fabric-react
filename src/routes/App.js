@@ -3,15 +3,26 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import AsyncComponent from '../components/AsyncComponent'
 
-const AsyncHome = AsyncComponent(() => import('./Home'))
+const AsyncHome = AsyncComponent(
+  () => import('../components/HomeTabBar'),
+)
 const AsyncSetMeeting = AsyncComponent(
   () => import('../containers/CSetMeeting'),
 )
 const AsyncSetMeetingDate = AsyncComponent(
   () => import('../containers/CSetMeetingDate'),
 )
+const AsyncSetMeetingRoom = AsyncComponent(
+  () => import('../components/SetMeetingRoom'),
+)
 const AsyncCompApplication = AsyncComponent(
-  () => import('../components/CompApplication'),
+  () => import('../containers/CCompApplication'),
+)
+const AsyncRegisterCalendar = AsyncComponent(
+  () => import('../containers/CRegisterCalendar'),
+)
+const AsyncRegisterCompApplication = AsyncComponent(
+  () => import('../components/RegisterCompApplication'),
 )
 const AsyncEditCompApplication = AsyncComponent(
   () => import('../containers/CEditCompApplication'),
@@ -22,9 +33,12 @@ const App = () => (
     <Switch>
       <Route exact path="/" component={AsyncHome} />
       <Route path="/set-m" component={AsyncSetMeeting} />
+      <Route path="/set-room" component={AsyncSetMeetingRoom} />
       <Route path="/set-m-d" component={AsyncSetMeetingDate} />
-      <Route path="/comp-apply" component={AsyncCompApplication} />
+      <Route path="/apply" component={AsyncCompApplication} />
+      <Route path="/apply-calendar" component={AsyncRegisterCalendar} />
       <Route path="/edit-comp-apply" component={AsyncEditCompApplication} />
+      <Route path="/register-comp" component={AsyncRegisterCompApplication} />
     </Switch>
   </Router>
 )

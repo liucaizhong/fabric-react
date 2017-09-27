@@ -1,62 +1,222 @@
 [
   {
     "id": "0",
-    "comp": "华夏幸福",
-    "date": "20170928",
-    "start": "9:00",
-    "end": "16:00",
-    "indus": "地产",
-    "form": 0,
-    "attendee": "CEO，董秘等",
-    "receptionist": "房小天",
-    "remarks": "人数控制在4到5人"
+    "name": "华夏幸福",
+    "indus": "房地产",
+    "code": "600340.SH",
+    "deadline": "20170906",
+    "createBy": "id-name-role",
+    "plan": {
+      "20170830": [
+        {
+          "date": "20170830",
+          "start": "09:00",
+          "end": "09:45",
+          "form": 1,
+          "attendee": "CEO，董秘等",
+          "analyst": [
+            {
+              "id": "wangjing",
+              "name": "王晶",
+              "role": 1,
+              "phone": "13918905612"
+            }
+          ],
+          "remarks": "人数控制在4到5人",
+          "application": [
+            {
+              "comp": "南方基金",
+              "grade": 0,
+              "guest": "刘大",
+              "level": "总经理",
+              "demand": "能见到总裁",
+              "sales": "王一"
+            },
+            {
+              "comp": "南方基金",
+              "grade": 0,
+              "guest": "刘大大",
+              "level": "总经理助理",
+              "demand": "能见到总裁",
+              "sales": "王一"
+            },
+            {
+              "comp": "华夏基金",
+              "grade": 1,
+              "guest": "刘小",
+              "level": "投资总监",
+              "demand": "",
+              "sales": "蒋一"
+            }
+          ]
+        }
+      ],
+      "20170831": [
+        {
+          "date": "20170831",
+          "start": "09:00",
+          "end": "10:00",
+          "form": 0,
+          "attendee": "CEO，董秘等",
+          "analyst": [
+            {
+              "id": "pengchong",
+              "name": "彭翀",
+              "role": 1,
+              "phone": "13918905612"
+            },
+            {
+              "id": "kuaijian",
+              "name": "蒯剑",
+              "role": 1,
+              "phone": "13918905612"
+            }
+          ],
+          "remarks": "人数控制在1到3人",
+          "application": [
+            {
+              "comp": "南方基金",
+              "grade": 0,
+              "guest": "刘大",
+              "level": "总经理",
+              "demand": "能见到总裁",
+              "sales": "王一"
+            }
+          ]
+        },
+        {
+          "date": "20170831",
+          "start": "14:00",
+          "end": "15:00",
+          "form": 2,
+          "attendee": "CEO，董秘等",
+          "analyst": [
+            {
+              "id": "tangzipei",
+              "name": "唐子佩",
+              "role": 1,
+              "phone": "13918905612"
+            }
+          ],
+          "remarks": ""
+        }
+      ]
+    }
   },
   {
     "id": "1",
-    "comp": "滨江集团",
-    "date": "20170928",
-    "start": "9:00",
-    "end": "16:00",
-    "indus": "地产",
-    "form": 1,
-    "attendee": "CEO，董秘等",
-    "receptionist": "房小天",
-    "remarks": "人数控制在4到5人"
+    "name": "滨江集团",
+    "indus": "房地产",
+    "code": "002244.SZ",
+    "deadline": "20171025",
+    "plan": {
+      "20170830": [
+        {
+          "date": "20170830",
+          "start": "09:00",
+          "end": "09:45",
+          "form": 1,
+          "attendee": "CEO，董秘等",
+          "analyst": [
+            {
+              "id": "tangzipei",
+              "name": "唐子佩",
+              "role": 1,
+              "phone": "13918905612"
+            },
+            {
+              "id": "fengjian",
+              "name": "冯剑",
+              "role": 1,
+              "phone": "13918905612"
+            },
+            {
+              "id": "jiangchenlong",
+              "name": "蒋晨龙",
+              "role": 1,
+              "phone": "13918905612"
+            }
+          ],
+          "remarks": "人数控制在4到5人",
+          "application": [
+            {
+              "comp": "南方基金",
+              "grade": 0,
+              "guest": "刘大",
+              "level": "总经理",
+              "demand": "能见到总裁",
+              "sales": "王一"
+            },
+            {
+              "comp": "南方基金",
+              "grade": 0,
+              "guest": "刘大大",
+              "level": "总经理助理",
+              "demand": "能见到总裁",
+              "sales": "王一"
+            },
+            {
+              "comp": "华夏基金",
+              "grade": 1,
+              "guest": "刘小",
+              "level": "投资总监",
+              "demand": "",
+              "sales": "蒋一"
+            }
+          ]
+        }
+      ],
+      "20170831": [
+        {
+          "date": "20170831",
+          "start": "09:00",
+          "end": "10:00",
+          "form": 0,
+          "attendee": "CEO，董秘等",
+          "analyst": [
+            {
+              "id": "jiangchenlong",
+              "name": "蒋晨龙",
+              "role": 1,
+              "phone": "13918905612"
+            }
+          ],
+          "remarks": "人数控制在1到3人",
+          "application": [
+            {
+              "comp": "南方基金",
+              "grade": 0,
+              "guest": "刘大",
+              "level": "总经理",
+              "demand": "能见到总裁",
+              "sales": "王一"
+            }
+          ]
+        },
+        {
+          "date": "20170831",
+          "start": "14:00",
+          "end": "15:00",
+          "form": 2,
+          "attendee": "CEO，董秘等",
+          "analyst": [
+            {
+              "id": "jiangchenlong",
+              "name": "蒋晨龙",
+              "role": 1,
+              "phone": "13918905612"
+            }
+          ],
+          "remarks": ""
+        }
+      ]
+    }
   },
   {
     "id": "2",
-    "comp": "黄山旅游",
-    "date": "20170930",
-    "start": "9:00",
-    "end": "14:00",
-    "indus": "旅游",
-    "form": 2,
-    "attendee": "CEO，董秘等",
-    "receptionist": "王小天",
-    "remarks": "人数控制在4到5人"
-  },
-  {
-    "id": "3",
-    "comp": "滨江集团",
-    "date": "20170928",
-    "start": "9:00",
-    "end": "16:00",
-    "indus": "地产",
-    "form": 1,
-    "attendee": "CEO，董秘等",
-    "receptionist": "房小天",
-    "remarks": "人数控制在4到5人"
-  },
-  {
-    "id": "4",
-    "comp": "黄山旅游",
-    "date": "20170930",
-    "start": "9:00",
-    "end": "14:00",
-    "indus": "旅游",
-    "form": 2,
-    "attendee": "CEO，董秘等",
-    "receptionist": "王小天",
-    "remarks": "人数控制在4到5人"
+    "name": "平安银行",
+    "indus": "银行",
+    "code": "000001.SZ",
+    "deadline": "20171025"
   }
 ]
