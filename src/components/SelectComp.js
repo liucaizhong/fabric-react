@@ -74,6 +74,7 @@ class SelectComp extends Component {
     const row = (rowData, sectionID, rowID) => {
       return (
         <List.Item
+          key={rowID}
           className="SelectComp__row"
           onClick={this.onClickItem.bind(this, rowData)}
         >

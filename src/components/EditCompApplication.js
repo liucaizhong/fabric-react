@@ -8,12 +8,15 @@ import {
   TextareaItem,
   Picker,
   Toast,
+  WhiteSpace,
+  Button,
+  Modal,
 } from 'antd-mobile'
 import { injectIntl, FormattedMessage, intlShape } from 'react-intl'
 import moment from 'moment'
 import SelectUser from '../containers/CSelectUser'
 
-const FIELDS = ['date', 'start', 'end', 'form', 'attendee',
+const FIELDS = ['id', 'date', 'start', 'end', 'form', 'attendee',
   'analyst', 'remarks']
 
 class EditCompApplication extends Component {
@@ -21,8 +24,6 @@ class EditCompApplication extends Component {
     super(props)
 
     this.initialEditing = props.location.state.editing
-    this.comp = props.location.state.comp
-    this.comp = props.location.state.comp
     this.history = props.history
     const data = props.location.state.data.d || props.location.state.data
 
@@ -53,34 +54,27 @@ class EditCompApplication extends Component {
   }
 
   onSave() {
-    const { intl, updateACompApplyInfo } = this.props
+    const { intl, updateCurCompApplyPlan } = this.props
     const data = {
-      ...this.state,
+      ...FIELDS.reduce((t, k) => {
+        return Object.assign(t, {
+          [k]: this.state[k],
+        })
+      }, {}),
     }
 
     // validate data
     // 0: empty data is not permitted
-    const f = FIELDS.every(
-      (key) => {
-        const val = data[key]
-        return val !== undefined && val !== ''
-      },
-    )
+    const f = ((obj) => {
+      for (const k in obj) {
+        if (k !== 'id' && k !== 'remarks' && !obj[k]) {
+          return true
+        }
+      }
+      return false
+    })(data)
 
     if (f) {
-      // save new comp application
-      console.log('save data', data)
-      if (this.initialEditing) {
-        updateACompApplyInfo(this.comp, data)
-        this.history.goBack()
-      } else {
-        // todo: submit to database
-        updateACompApplyInfo(this.comp, data)
-        this.setState({
-          editing: !this.state.editing,
-        })
-      }
-    } else {
       Toast.fail(
         intl.formatMessage({
           id: 'SetMeetingDate.error2',
@@ -89,6 +83,19 @@ class EditCompApplication extends Component {
         null,
         true,
       )
+    } else {
+      // save new comp application
+      console.log('save data', data)
+      if (this.initialEditing) {
+        updateCurCompApplyPlan(data)
+        this.history.goBack()
+      } else {
+        // todo: submit to database
+        updateCurCompApplyPlan(data)
+        this.setState({
+          editing: !this.state.editing,
+        })
+      }
     }
   }
 
@@ -162,7 +169,7 @@ class EditCompApplication extends Component {
   }
 
   render() {
-    const { intl, curMeetingInfo } = this.props
+    const { intl, curMeetingInfo, curCompInfo } = this.props
 
     const formData = [{
       label: intl.formatMessage({
@@ -181,12 +188,19 @@ class EditCompApplication extends Component {
       value: 2,
     }]
 
-    const dateRow = curMeetingInfo.dates.find((cur) => {
+    const dates = curMeetingInfo.dates || [{
+      start: '09:00',
+      end: '18:00',
+      interval: '60',
+      date: moment().format('YYYYMMDD'),
+    }]
+
+    const dateRow = dates.find((cur) => {
       return !cur.date.localeCompare(this.state.date)
     })
-    const datesLen = curMeetingInfo.dates && curMeetingInfo.dates.length
-    const minDate = datesLen ? curMeetingInfo.dates[0].date : ''
-    const maxDate = datesLen ? curMeetingInfo.dates[datesLen - 1].date : ''
+    const datesLen = dates && dates.length
+    const minDate = datesLen ? dates[0].date : ''
+    const maxDate = datesLen ? dates[datesLen - 1].date : ''
     const minTime = dateRow && dateRow.start || ''
     const maxTime = dateRow && dateRow.end || ''
 
@@ -195,7 +209,7 @@ class EditCompApplication extends Component {
         onBack={this.closeSelectUser.bind(this)}
         editing={this.state.editing}
         userRole="1"
-        analyst={this.state.analyst}
+        users={this.state.analyst}
       /> :
       (
         <div>
@@ -242,12 +256,12 @@ class EditCompApplication extends Component {
                 />
             }
           >
-            <FormattedMessage id="CompApplication.navTitle" />
+            <FormattedMessage id="EditCompApplication.navTitle" />
           </NavBar>
           <List
             className="Editcompapplication-list__div"
             renderHeader={() => (
-              <span>{`${this.comp.name} ${this.comp.code}`}</span>
+              <span>{`${curCompInfo.name} ${curCompInfo.code}`}</span>
             )}
           >
             <DatePicker
@@ -390,6 +404,54 @@ class EditCompApplication extends Component {
               editable={this.state.editing}
             />
           </List>
+          <WhiteSpace size="md" />
+          {this.state.editing ?
+            <Button
+              className="delBtnPanel"
+              activeClassName="delBtnPanel__active"
+              onClick={() => {
+                Modal.alert(intl.formatMessage({
+                  id: 'EditCompApplication.alertTitle0',
+                }), intl.formatMessage({
+                  id: 'EditCompApplication.alertDesc0',
+                }), [{
+                  text: intl.formatMessage({
+                    id: 'Common.cancel',
+                  }),
+                  onPress: () => {},
+                }, {
+                  text: intl.formatMessage({
+                    id: 'Common.confirm',
+                  }),
+                  onPress: () => {
+                    console.log('confirm delete')
+                    const { date, start, end } = this.state
+                    const { deleteCurCompApplyPlan } = this.props
+                    if (this.initialEditing) {
+                      deleteCurCompApplyPlan({
+                        date,
+                        start,
+                        end,
+                      })
+                      this.history.goBack()
+                    } else {
+                      // todo: submit to database
+                      deleteCurCompApplyPlan({
+                        date,
+                        start,
+                        end,
+                      })
+                      this.history.goBack()
+                    }
+                  },
+                }])
+              }}
+            >
+              {intl.formatMessage({
+                id: 'Common.delete',
+              })}
+            </Button>
+          : null}
         </div>
       )
   }
@@ -400,7 +462,9 @@ EditCompApplication.propTypes = {
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   curMeetingInfo: PropTypes.object.isRequired,
-  updateACompApplyInfo: PropTypes.func.isRequired,
+  curCompInfo: PropTypes.object.isRequired,
+  updateCurCompApplyPlan: PropTypes.func.isRequired,
+  deleteCurCompApplyPlan: PropTypes.func.isRequired,
 }
 
 export default injectIntl(EditCompApplication)

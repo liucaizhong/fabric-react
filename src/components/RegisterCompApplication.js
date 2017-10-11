@@ -1,18 +1,18 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import SelectComp from '../containers/CSelectComp'
-import RegisterCalendar from '../containers/CRegisterCalendar'
+// import RegisterCalendar from '../containers/CRegisterCalendar'
 
 class RegisterCompApplication extends Component {
-  constructor(props) {
-    super(props)
-
-    const { editing } = props.location.state
-
-    this.state = {
-      editing,
-    }
-  }
+  // constructor(props) {
+  //   super(props)
+  //
+  //   const { editing } = props.location.state
+  //
+  //   this.state = {
+  //     editing,
+  //   }
+  // }
 
   onBack() {
     const { history } = this.props
@@ -20,33 +20,32 @@ class RegisterCompApplication extends Component {
   }
 
   onClickItem(rowData) {
-    console.log('rowData', rowData)
-    this.setState({
-      editing: false,
-      comp: Object.assign({}, rowData),
+    const { setCurCompInfo, curMeetingInfo, history } = this.props
+
+    setCurCompInfo({
+      ...rowData,
+      deadline: curMeetingInfo.deadline,
+    })
+
+    history.push('/apply-calendar', {
+      editing: true,
     })
   }
 
   render() {
-    const { history } = this.props
-
-    return this.state.editing ?
+    return (
       <SelectComp
         onBack={this.onBack.bind(this)}
         onClickItem={this.onClickItem.bind(this)}
-      /> :
-      <RegisterCalendar
-        editing
-        history={history}
-        location={{
-          state: this.state.comp,
-        }}
       />
+    )
   }
 }
 
 RegisterCompApplication.propTypes = {
   history: PropTypes.object.isRequired,
+  curMeetingInfo: PropTypes.object.isRequired,
+  setCurCompInfo: PropTypes.func.isRequired,
 }
 
 export default RegisterCompApplication

@@ -9,7 +9,8 @@ class CustomCalendar extends Component {
     super(props)
 
     const { data, yAxis, editing } = props
-    this.comp = props.comp
+    console.log('data', props)
+    // this.comp = props.comp
     this.state = {
       data: this.initGridData(yAxis, data),
       editing,
@@ -17,10 +18,11 @@ class CustomCalendar extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { data, yAxis } = nextProps
-    this.state = {
+    const { data, yAxis, editing } = nextProps
+    this.setState({
       data: this.initGridData(yAxis, data),
-    }
+      editing,
+    })
   }
 
   initGridData({ start, end, interval, date }, data) {
@@ -54,6 +56,16 @@ class CustomCalendar extends Component {
     return d
   }
 
+  ifClickCompApplyBlock(row) {
+    const { deadline } = this.props
+    const d0 = moment(deadline.meetingDeadline, 'YYYYMMDD')
+    const d1 = moment(deadline.compDeadline, 'YYYYMMDD')
+    const d2 = moment()
+    const flag = d2 <= moment.max(d0, d1)
+
+    return flag || row.d
+  }
+
   render() {
     return (
       <div
@@ -66,15 +78,26 @@ class CustomCalendar extends Component {
                 <span>{row.start}</span>
               </div>
               <div className="custom-calendar-grid__row-comp">
-                <Link to={{
-                  pathname: '/edit-comp-apply',
-                  state: {
-                    data: row,
-                    editing: this.state.editing,
-                    comp: this.comp,
-                  },
-                }}
-                >
+                {this.ifClickCompApplyBlock(row) ?
+                  <Link to={{
+                    pathname: '/edit-comp-apply',
+                    state: {
+                      data: row,
+                      editing: this.state.editing,
+                    },
+                  }}
+                  >
+                    <div
+                      className="custom-calendar-grid__row-comp-content"
+                      style={row.d ? {
+                        backgroundColor: '#8FBAF3',
+                      } : {}}
+                    >
+                      {row.d ? <FormattedMessage
+                        id={`CompApplyList.Form.text${row.d.form}`}
+                      /> : null}
+                    </div>
+                  </Link> :
                   <div
                     className="custom-calendar-grid__row-comp-content"
                     style={row.d ? {
@@ -85,26 +108,25 @@ class CustomCalendar extends Component {
                       id={`CompApplyList.Form.text${row.d.form}`}
                     /> : null}
                   </div>
-                </Link>
+                }
               </div>
               <div className="custom-calendar-grid__row-client">
-                <Link to={{
-                  pathname: '/edit-comp-apply',
-                  state: {
-                    data: row,
-                    editing: this.state.editing,
-                    comp: this.comp,
-                  },
-                }}
-                >
-                  <div
-                    className="custom-calendar-grid__row-client-content"
-                    style={row.d ? {
-                      backgroundColor: '#C5E3F6',
-                    } : {}}
+                {row.d ?
+                  <Link to={{
+                    pathname: '/client-apply-list',
+                    state: {
+                      data: row,
+                      editing: this.state.editing,
+                    },
+                  }}
                   >
-                    {
-                      row.d ?
+                    <div
+                      className="custom-calendar-grid__row-client-content"
+                      style={{
+                        backgroundColor: '#C5E3F6',
+                      }}
+                    >
+                      {
                         row.d.application ?
                           <FormattedMessage
                             id="CustomCalendar.hasApplication"
@@ -113,10 +135,11 @@ class CustomCalendar extends Component {
                             }}
                           />
                         : <FormattedMessage id="CustomCalendar.noApplication" />
-                      : null
-                    }
-                  </div>
-                </Link>
+                      }
+                    </div>
+                  </Link> :
+                  <div className="custom-calendar-grid__row-client-content" />
+                }
               </div>
             </div>
           )
@@ -139,6 +162,7 @@ class CustomCalendar extends Component {
 CustomCalendar.propTypes = {
   yAxis: PropTypes.object.isRequired,
   data: PropTypes.array.isRequired,
+  deadline: PropTypes.object.isRequired,
 }
 
 export default CustomCalendar

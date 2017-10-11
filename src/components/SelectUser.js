@@ -16,7 +16,7 @@ class SelectUser extends Component {
       rowHasChanged: (row1, row2) => row1 !== row2,
     })
 
-    const { editing, analyst } = props
+    const { editing, users } = props
 
     this.state = {
       dataSource,
@@ -24,7 +24,7 @@ class SelectUser extends Component {
       filter: '',
       editing,
       all: [],
-      checked: [].concat(analyst),
+      checked: [].concat(users),
       unchecked: [],
     }
   }
@@ -158,7 +158,7 @@ class SelectUser extends Component {
           onChange={_.debounce((val) => this.onChange(val), 500)}
         />
         <ListView
-          className="SelectComp__lv"
+          className="SelectUser__lv"
           dataSource={this.state.dataSource}
           renderFooter={footer}
           renderRow={row}
@@ -181,13 +181,13 @@ SelectUser.propTypes = {
   getUserList: PropTypes.func.isRequired,
   editing: PropTypes.bool,
   userRole: PropTypes.string,
-  analyst: PropTypes.array,
+  users: PropTypes.array,
 }
 
 SelectUser.defaultProps = {
   editing: true,
   userRole: 'ALL',
-  analyst: [],
+  users: [],
 }
 
 export default SelectUser

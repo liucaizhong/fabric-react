@@ -1,17 +1,18 @@
 import React, { Component } from 'react'
 import { findDOMNode } from 'react-dom'
 import PropTypes from 'prop-types'
-import { List, ListView, SwipeAction, Modal, Icon,
-  RefreshControl, Toast } from 'antd-mobile'
+import { List, ListView, SwipeAction, Modal, RefreshControl } from 'antd-mobile'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
-import moment from 'moment'
 
-class CompApplyList extends Component {
+class ClientApplyList extends Component {
   constructor(props) {
     super(props)
     const dataSource = new ListView.DataSource({
       rowHasChanged: (row1, row2) => row1 !== row2,
     })
+
+    this.initialEditing = props.editing
+    console.log('props', props)
 
     this.state = {
       dataSource,
@@ -42,34 +43,30 @@ class CompApplyList extends Component {
         this.domScroller.options.preventDefaultOnTouchMove = undefined
       }
     })
-    // const { getCompApplyList } = this.props
-    //
-    // getCompApplyList('/compApplyData.json', {
-    //   method: 'GET',
-    // })
   }
 
   componentWillReceiveProps(nextProps) {
-    const { compApplyList } = this.props
-    const { compApplyList: nextCompApplyList, compApplyFilter } = nextProps
-    const preLen = compApplyList.length
-    const delta = nextCompApplyList.length - preLen
+    const { clientApplyList } = this.props
+    const { clientApplyList: nextClientApplyList,
+      clientApplyFilter } = nextProps
+    const preLen = clientApplyList.length
+    const delta = nextClientApplyList.length - preLen
 
-    const loadCompApplyListPromise = new Promise((resolve, reject) => {
+    const loadClientApplyListPromise = new Promise((resolve, reject) => {
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(
-          nextCompApplyList.filter((cur) => {
-            return cur.name.includes(compApplyFilter)
-            || cur.indus.includes(compApplyFilter)
-            || cur.code.includes(compApplyFilter)
-            || this.applyStatus(cur.deadline).text.includes(compApplyFilter)
+          nextClientApplyList.filter((cur) => {
+            return cur.comp.includes(clientApplyFilter)
+            || cur.guest.includes(clientApplyFilter)
+            || cur.level.includes(clientApplyFilter)
+            || cur.sales.includes(clientApplyFilter)
           }),
         ),
         // isLoading: false,
       }, resolve())
     })
 
-    loadCompApplyListPromise.then(() => {
+    loadClientApplyListPromise.then(() => {
       const preRefreshing = this.state.refreshing
       setTimeout(() => {
         this.setState({
@@ -85,26 +82,10 @@ class CompApplyList extends Component {
   componentWillUnmount() {
     this.lv.getInnerViewNode().removeEventListener('touchstart', this.ts)
     this.lv.getInnerViewNode().removeEventListener('touchmove', this.tm)
-  }
-
-  applyStatus = (deadline) => {
-    const { intl, curMeetingInfo } = this.props
-    const d0 = moment(curMeetingInfo.deadline, 'YYYYMMDD')
-    const d1 = moment(deadline, 'YYYYMMDD')
-    const d2 = moment()
-    const flag = d2 <= moment.max(d0, d1)
-    const text = flag
-    ? intl.formatMessage({
-      id: 'CompApplyList.applystatus0',
-    })
-    : intl.formatMessage({
-      id: 'CompApplyList.applystatus1',
-    })
-
-    return {
-      text,
-      flag,
-    }
+    // update application list of curCompApplyPlan
+    const { axisData, clientApplyList,
+      updateCurCompApplyPlanApplyList } = this.props
+    updateCurCompApplyPlanApplyList(axisData, clientApplyList)
   }
 
   // concatDateTimeStr = (rowData) => {
@@ -112,18 +93,18 @@ class CompApplyList extends Component {
   // }
 
   clickListItem(data) {
-    const { history, setCurCompInfo } = this.props
+    const { history, axisData } = this.props
 
-    setCurCompInfo(data)
-    history.push('/apply-calendar', {
-      editing: false,
+    history.push('/edit-client-apply', {
+      editing: this.initialEditing,
+      axisData,
+      data,
     })
-
     history.goForward()
   }
 
   render() {
-    const { intl, getCompApplyList } = this.props
+    const { intl, getClientApplyList } = this.props
 
     const header = () => {
       if (this.state.showHeader) {
@@ -136,12 +117,12 @@ class CompApplyList extends Component {
         return typeof this.state.showHeader === 'boolean'
         ? (
           <FormattedMessage
-            id="CompApplyList.newContentText0"
+            id="ClientApplyList.newContentText0"
           />
         )
         : (
           <FormattedMessage
-            id="CompApplyList.newContentText1"
+            id="ClientApplyList.newContentText1"
             values={{
               num: this.state.showHeader,
             }}
@@ -168,67 +149,19 @@ class CompApplyList extends Component {
     )
 
     const row = (rowData, sectionID, rowID) => {
-      const { updateCurCompInfo } = this.props
-      const applyStatus = this.applyStatus(rowData.deadline)
-
       return (
         <SwipeAction
           key={rowID}
           right={[
             {
               text: intl.formatMessage({
-                id: 'CompApplyList.modifyApplyDeadline',
-              }),
-              onPress: () => {
-                return Modal.alert(intl.formatMessage({
-                  id: 'CompApplyList.alertTitle0',
-                }), intl.formatMessage({
-                  id: 'CompApplyList.alertDesc0',
-                }), [{
-                  text: intl.formatMessage({
-                    id: 'Common.cancel',
-                  }),
-                  onPress: () => {},
-                }, {
-                  text: intl.formatMessage({
-                    id: 'Common.confirm',
-                  }),
-                  onPress: () => {
-                    if (applyStatus.flag) {
-                      Toast.fail(
-                        intl.formatMessage({
-                          id: 'CompApplyList.error0',
-                        }),
-                        2,
-                        null,
-                        true,
-                      )
-                    } else {
-                      // todo: update database
-                      const deadline = moment().add(5, 'days').format('YYYYMMDD')
-                      updateCurCompInfo({
-                        deadline,
-                      })
-                      this.lv.forceUpdate()
-                    }
-                  },
-                }])
-              },
-              style: {
-                backgroundColor: '#33A42A',
-                color: 'white',
-                fontSize: '0.26rem',
-              },
-            },
-            {
-              text: intl.formatMessage({
                 id: 'Common.delete',
               }),
               onPress: () => {
                 return Modal.alert(intl.formatMessage({
-                  id: 'CompApplyList.alertTitle1',
+                  id: 'ClientApplyList.alertTitle0',
                 }), intl.formatMessage({
-                  id: 'CompApplyList.alertDesc1',
+                  id: 'ClientApplyList.alertDesc0',
                 }), [{
                   text: intl.formatMessage({
                     id: 'Common.cancel',
@@ -239,7 +172,14 @@ class CompApplyList extends Component {
                     id: 'Common.confirm',
                   }),
                   onPress: () => {
-                    console.log('confirm delete comp application')
+                    if (this.initialEditing) {
+                      const { deleteClientApplyList } = this.props
+                      deleteClientApplyList(rowData)
+                    } else {
+                      // todo: submit to database
+                      const { deleteClientApplyList } = this.props
+                      deleteClientApplyList(rowData)
+                    }
                   },
                 }])
               },
@@ -254,24 +194,13 @@ class CompApplyList extends Component {
           <List.Item
             className="Comp-applyList__row"
             onClick={this.clickListItem.bind(this, rowData)}
-            extra={
-              <div className="Comp-applyList__row-extra">
-                <Icon
-                  type={applyStatus.flag
-                    ? require('../assets/icons/circular-green.svg')
-                    : require('../assets/icons/circular-red.svg')
-                  }
-                  size="xs"
-                />
-                <span>{applyStatus.text}</span>
-              </div>
-            }
+            extra={rowData.sales}
           >
             <div className="Comp-applyList__row-content">
-              <span>{rowData.name}</span>
+              <span>{rowData.comp}</span>
               <div>
-                <span>{rowData.indus}</span>
-                <span>{rowData.code}</span>
+                <span>{rowData.guest}</span>
+                <span>{rowData.level}</span>
               </div>
             </div>
           </List.Item>
@@ -284,11 +213,20 @@ class CompApplyList extends Component {
         this.setState({ refreshing: true })
       }
 
-      // get comp apply list
-      // const { curMeetingInfo } = this.props
-      getCompApplyList('/compApplyList.json', {
-        method: 'GET',
-      })
+      if (!this.firstLoad) {
+        this.firstLoad = true
+        const { axisData, loadClientApplyList } = this.props
+        const listData = axisData.d && axisData.d.application
+        if (listData && listData.length) {
+          loadClientApplyList(listData)
+        } else {
+          this.setState({ refreshing: false })
+        }
+      } else {
+        getClientApplyList('/clientApplyList.json', {
+          method: 'GET',
+        })
+      }
     }
 
     const onScroll = (e) => {
@@ -338,15 +276,17 @@ class CompApplyList extends Component {
   }
 }
 
-CompApplyList.propTypes = {
+ClientApplyList.propTypes = {
   intl: intlShape.isRequired,
   history: PropTypes.object.isRequired,
-  getCompApplyList: PropTypes.func.isRequired,
-  setCurCompInfo: PropTypes.func.isRequired,
-  updateCurCompInfo: PropTypes.func.isRequired,
-  compApplyList: PropTypes.array.isRequired,
-  compApplyFilter: PropTypes.string.isRequired,
-  curMeetingInfo: PropTypes.object.isRequired,
+  // curMeetingInfo: PropTypes.object.isRequired,
+  // curCompInfo: PropTypes.object.isRequired,
+  clientApplyList: PropTypes.array.isRequired,
+  clientApplyFilter: PropTypes.string.isRequired,
+  getClientApplyList: PropTypes.func.isRequired,
+  loadClientApplyList: PropTypes.func.isRequired,
+  deleteClientApplyList: PropTypes.func.isRequired,
+  updateCurCompApplyPlanApplyList: PropTypes.func.isRequired,
 }
 
-export default injectIntl(CompApplyList)
+export default injectIntl(ClientApplyList)

@@ -428,8 +428,8 @@ body {
           font-weight: normal;
           color: #989898;
 
-          span:nth-child(2) {
-            margin-left: 0.3rem;
+          span {
+            margin-right: 0.2rem;
           }
         }
       }
@@ -482,12 +482,25 @@ body {
             width: 100%;
             text-align: center;
             padding-left: 0.1rem;
-            right: 0.1rem;
+            right: 0.04rem;
+            top: 0.07rem;
           }
         }
       }
     }
   }
+}
+
+.delBtnPanel.am-button {
+  border: none;
+  background-color: #F0413B;
+  border-radius: 0;
+  color: #fff;
+  font-size: 0.35rem;
+}
+
+.delBtnPanel__active.delBtnPanel.am-button {
+  background-color: #F3251E;
 }
 
 .custom-search-bar.am-search {
@@ -563,12 +576,14 @@ body {
   padding-top: 0.88rem;
 
   .SelectComp__row {
-    .am-list-line {
-      .am-list-content {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        text-align: center;
-        font-size: 0.28rem;
+    .am-list-item {
+      .am-list-line {
+        .am-list-content {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          text-align: center;
+          font-size: 0.28rem;
+        }
       }
     }
   }
@@ -662,23 +677,90 @@ body {
   }
 }
 
-.SelectUser__row {
-  .am-checkbox {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    height: .88rem;
+.SelectUser__lv {
+  padding-top: 0.88rem;
 
-    .am-checkbox-inner {
-      left: .3rem;
-      top: .24rem;
+  .SelectUser__row {
+    padding-left: 0;
+
+    .am-list-thumb {
+      margin-right: 0;
+
+      .am-checkbox {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: .88rem;
+
+        .am-checkbox-inner {
+          right: .3rem;
+          top: .24rem;
+        }
+      }
+    }
+
+    .am-list-line {
+      margin-left: 0.4rem;
     }
   }
 
-  .am-list-line {
-    margin-left: 0.4rem;
+  .am-list-footer {
+    font-size: 0.28rem;
+    line-height: 1.5;
+    text-align: center;
+    padding: 0.08rem 0;
   }
+}
+
+.Editclientapplication-list__div {
+  padding: 0.88rem 0 0.3rem 0;
+
+  .am-list-item .am-input-control input {
+    text-align: right;
+  }
+}
+
+.SelectCustomer-lv__div {
+  .Comp-applylist__div;
+
+  .am-list-item {
+    .am-list-line {
+      padding-right: 0.8rem;
+    }
+
+    .am-list-thumb {
+      &:first-child {
+        margin-left: 0;
+        margin-right: 0;
+      }
+
+      .am-checkbox {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: .88rem;
+
+        .am-checkbox-inner {
+          right: .3rem;
+          top: .4rem;
+        }
+      }
+    }
+  }
+
+  // .single {
+  //   .am-list-thumb {
+  //     display: none;
+  //   }
+  //
+  //   .am-list-line {
+  //     padding-right: 0.3rem;
+  //   }
+  // }
 }

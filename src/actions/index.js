@@ -67,16 +67,46 @@ export const loadCompApplyList = makeActionCreator(
   TYPES.LOAD_COMPAPPLY_LIST,
   'data',
 )
-// update comp application deadline
-export const updateCompApplyDeadline = makeActionCreator(
-  TYPES.UPDATE_COMAPPLY_DEADLINE,
-  'rowId',
-  'deadline',
+// set current comp info
+export const setCurCompInfo = makeActionCreator(
+  TYPES.SET_CUR_COMP_INFO,
+  'info',
 )
-// update a specified comp application info
-export const updateACompApplyInfo = makeActionCreator(
-  TYPES.UPDATE_A_COMAPPLY_INFO,
-  'comp',
+// update current comp application info
+export const updateCurCompInfo = makeActionCreator(
+  TYPES.UPDATE_CUR_COMP_INFO,
+  'info',
+)
+// set current comp application plan
+export const setCurCompApplyPlan = makeActionCreator(
+  TYPES.SET_CUR_COMP_APPLY_PLAN,
+  'data',
+)
+// get current comp application plan
+export const getCurCompApplyPlan = makeActionCreator(
+  TYPES.GET_CUR_COMP_APPLY_PLAN,
+  'url',
+  'config',
+)
+// update current comp application plan
+export const updateCurCompApplyPlan = makeActionCreator(
+  TYPES.UPDATE_CUR_COMP_APPLY_PLAN,
+  'data',
+)
+// update current comp application plan: application list
+export const updateCurCompApplyPlanApplyList = makeActionCreator(
+  TYPES.UPDATE_CUR_COMP_APPLY_PLAN_APPLICATION,
+  'axis',
+  'data',
+)
+// delete current comp application plan
+export const deleteCurCompApplyPlan = makeActionCreator(
+  TYPES.DELETE_CUR_COMP_APPLY_PLAN,
+  'data',
+)
+// reset current comp application plan
+export const resetCurCompApplyPlan = makeActionCreator(
+  TYPES.RESET_CUR_COMP_APPLY_PLAN,
   'data',
 )
 // set filter for comp application list
@@ -104,5 +134,37 @@ export const getUserList = makeActionCreator(
 // load user list
 export const loadUserList = makeActionCreator(
   TYPES.LOAD_USER_LIST,
+  'data',
+)
+// set filter for client application list
+export const setClientApplyFilter = makeActionCreator(
+  TYPES.SET_CLIENT_APPLY_FILTER,
+  'filter',
+)
+// get client application list
+export const getClientApplyList = makeActionCreator(
+  TYPES.GET_CLIENTAPPLY_LIST,
+  'url',
+  'config',
+)
+// load client application list
+export const loadClientApplyList = makeActionCreator(
+  TYPES.LOAD_CLIENTAPPLY_LIST,
+  'data',
+)
+// delete client application list
+export const deleteClientApplyList = makeActionCreator(
+  TYPES.DELETE_CLIENTAPPLY_LIST,
+  'data',
+)
+// get customer list
+export const getCustomerList = makeActionCreator(
+  TYPES.GET_CUSTOMER_LIST,
+  'url',
+  'config',
+)
+// load customer list
+export const loadCustomerList = makeActionCreator(
+  TYPES.LOAD_CUSTOMER_LIST,
   'data',
 )

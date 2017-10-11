@@ -111,6 +111,57 @@ function* loadUserList(action) {
   }))
 }
 
+// set current comp application plan
+function* watchGetCompApplyPlan() {
+  yield takeLatest(TYPES.GET_CUR_COMP_APPLY_PLAN, setCompApplyPlan)
+}
+
+function* setCompApplyPlan(action) {
+  const { url, config } = action
+  console.log('setCompApplyPlan', action)
+  const data = yield call(fetchGet, url, config)
+
+  yield put(Object.assign({
+    type: TYPES.SET_CUR_COMP_APPLY_PLAN,
+  }, {
+    data,
+  }))
+}
+
+// load client application list
+function* watchLoadClientApplyList() {
+  yield takeLatest(TYPES.GET_CLIENTAPPLY_LIST, loadClientApplyList)
+}
+
+function* loadClientApplyList(action) {
+  const { url, config } = action
+
+  const data = yield call(fetchGet, url, config)
+
+  yield put(Object.assign({
+    type: TYPES.LOAD_CLIENTAPPLY_LIST,
+  }, {
+    data,
+  }))
+}
+
+// load customer list
+function* watchLoadCustomerList() {
+  yield takeLatest(TYPES.GET_CUSTOMER_LIST, loadCustomerList)
+}
+
+function* loadCustomerList(action) {
+  const { url, config } = action
+
+  const data = yield call(fetchGet, url, config)
+
+  yield put(Object.assign({
+    type: TYPES.LOAD_CUSTOMER_LIST,
+  }, {
+    data,
+  }))
+}
+
 export default function* rootSaga() {
   yield all([
     call(setUser),
@@ -119,5 +170,8 @@ export default function* rootSaga() {
     call(watchLoadCompApplyList),
     call(watchLoadCompList),
     call(watchLoadUserList),
+    call(watchGetCompApplyPlan),
+    call(watchLoadClientApplyList),
+    call(watchLoadCustomerList),
   ])
 }

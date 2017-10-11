@@ -3,18 +3,26 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { NavBar, Icon } from 'antd-mobile'
 import { FormattedMessage } from 'react-intl'
-import CompApplyList from '../containers/CCompApplyList'
+import ClientApplyList from '../containers/CClientApplyList'
 import CustomSearchBar from './CustomSearchBar'
 
-class CompApplication extends Component {
+class ClientApplication extends Component {
   constructor(props) {
     super(props)
 
     this.history = props.history
+    this.axisData = props.location.state.data
 
     this.state = {
       showSearchBar: false,
+      editing: props.location.state.editing,
     }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      editing: nextProps.location.state.editing,
+    })
   }
 
   onBack() {
@@ -28,7 +36,7 @@ class CompApplication extends Component {
   }
 
   render() {
-    const { onChange, onSubmit, compApplyFilter } = this.props
+    const { onChange, onSubmit, clientApplyFilter } = this.props
 
     return (
       <div>
@@ -50,8 +58,8 @@ class CompApplication extends Component {
               toggleBar={this.onToggleSearchBar.bind(this)}
               onSubmit={onSubmit}
               onChange={onChange}
-              placeholder="CompApplication.placeholder"
-              defaultValue={compApplyFilter}
+              placeholder="ClientApplication.placeholder"
+              defaultValue={clientApplyFilter}
             />,
             <Icon
               key="1"
@@ -67,7 +75,12 @@ class CompApplication extends Component {
             />,
             <Link
               key="2"
-              to="/register-comp"
+              to={{
+                pathname: '/edit-client-apply',
+                state: {
+                  editing: true,
+                },
+              }}
             >
               <Icon
                 type={require('../assets/icons/edit.svg')}
@@ -76,22 +89,24 @@ class CompApplication extends Component {
             </Link>,
           ]}
         >
-          <FormattedMessage id="CompApplication.navTitle" />
+          <FormattedMessage id="ClientApplication.navTitle" />
         </NavBar>
 
-        <CompApplyList
+        <ClientApplyList
           history={this.history}
+          axisData={this.axisData}
+          editing={this.state.editing}
         />
       </div>
     )
   }
 }
 
-CompApplication.propTypes = {
+ClientApplication.propTypes = {
   history: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  compApplyFilter: PropTypes.string.isRequired,
+  clientApplyFilter: PropTypes.string.isRequired,
 }
 
-export default CompApplication
+export default ClientApplication

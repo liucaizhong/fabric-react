@@ -29,7 +29,8 @@ class HomeSearchBar extends Component {
   }
 
   render() {
-    const { intl, onChange, onSubmit, roleId, onClickLink } = this.props
+    const { intl, onChange, onSubmit, roleId, onClickLink,
+      meetingContentFilter } = this.props
     const { showFilterMenu } = this.state
 
     return (
@@ -42,6 +43,7 @@ class HomeSearchBar extends Component {
           onChange={onChange}
           onSubmit={onSubmit}
           className="home-searchbar__input"
+          defaultValue={meetingContentFilter}
         />
         {
           !roleId ?
@@ -100,6 +102,7 @@ HomeSearchBar.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   roleId: PropTypes.number.isRequired,
   onClickLink: PropTypes.func.isRequired,
+  meetingContentFilter: PropTypes.string.isRequired,
 }
 
 export default injectIntl(HomeSearchBar)

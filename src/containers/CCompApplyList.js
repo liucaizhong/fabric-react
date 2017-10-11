@@ -1,12 +1,14 @@
 import { connect } from 'react-redux'
 import CompApplyList from '../components/CompApplyList'
-import { getCompApplyList, updateCompApplyDeadline } from '../actions/index'
+import { getCompApplyList, setCurCompInfo,
+  updateCurCompInfo } from '../actions/index'
 
 const mapStateToProps = (state) => {
+  const { compApplyList, compApplyFilter, curMeetingInfo } = state
   return {
-    compApplyList: state.compApplyList,
-    compApplyFilter: state.compApplyFilter,
-    meetingDeadline: state.curMeetingInfo.deadline,
+    compApplyList,
+    compApplyFilter,
+    curMeetingInfo,
   }
 }
 
@@ -15,8 +17,11 @@ const mapDispatchToProps = (dispatch) => {
     getCompApplyList: (url, config) => {
       dispatch(getCompApplyList(url, config))
     },
-    updateCompApplyDeadline: (rowId, deadline) => {
-      dispatch(updateCompApplyDeadline(rowId, deadline))
+    setCurCompInfo: (data) => {
+      dispatch(setCurCompInfo(data))
+    },
+    updateCurCompInfo: (deadline) => {
+      dispatch(updateCurCompInfo(deadline))
     },
   }
 }

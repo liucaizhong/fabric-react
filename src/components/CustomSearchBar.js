@@ -19,7 +19,10 @@ class CustomSearchBar extends Component {
   }
 
   render() {
-    const { intl, toggleBar, placeholder, onChange, onSubmit } = this.props
+    const { intl, toggleBar, placeholder,
+      onChange, onSubmit, defaultValue } = this.props
+
+    // console.log('CustomSearchBar', this.props)
 
     return (
       <div style={{
@@ -45,6 +48,7 @@ class CustomSearchBar extends Component {
           })}
           onChange={onChange}
           onSubmit={onSubmit}
+          defaultValue={defaultValue}
         />
       </div>
     )
@@ -58,11 +62,13 @@ CustomSearchBar.propTypes = {
   show: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
+  defaultValue: PropTypes.string,
 }
 
 CustomSearchBar.defaultProps = {
   placeholder: 'CustomSearchBar.placeholder',
   show: true,
+  defaultValue: '',
 }
 
 export default injectIntl(CustomSearchBar)

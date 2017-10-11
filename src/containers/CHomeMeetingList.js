@@ -19,9 +19,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(getMeetingList(url, config))
     },
     clickLink: (state) => {
-      dispatch(setCurMeetingInfo({
-        ...state,
-      }))
+      dispatch(setCurMeetingInfo(state))
     },
   }
 }

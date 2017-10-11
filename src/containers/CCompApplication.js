@@ -3,6 +3,13 @@ import _ from 'lodash'
 import CompApplication from '../components/CompApplication'
 import { setCompApplyFilter } from '../actions/index'
 
+const mapStateToProps = (state) => {
+  const { compApplyFilter } = state
+  return {
+    compApplyFilter,
+  }
+}
+
 const mapDispatchToProps = (dispatch) => {
   return {
     onSubmit: (val) => {
@@ -15,7 +22,7 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const CCompApplication = connect(
-  undefined,
+  mapStateToProps,
   mapDispatchToProps,
 )(CompApplication)
 

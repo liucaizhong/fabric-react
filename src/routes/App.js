@@ -22,10 +22,16 @@ const AsyncRegisterCalendar = AsyncComponent(
   () => import('../containers/CRegisterCalendar'),
 )
 const AsyncRegisterCompApplication = AsyncComponent(
-  () => import('../components/RegisterCompApplication'),
+  () => import('../containers/CRegisterCompApplication'),
 )
 const AsyncEditCompApplication = AsyncComponent(
   () => import('../containers/CEditCompApplication'),
+)
+const AsyncClientApplication = AsyncComponent(
+  () => import('../containers/CClientApplication'),
+)
+const AsyncEditClientApplication = AsyncComponent(
+  () => import('../components/EditClientApplication'),
 )
 
 const App = () => (
@@ -39,6 +45,8 @@ const App = () => (
       <Route path="/apply-calendar" component={AsyncRegisterCalendar} />
       <Route path="/edit-comp-apply" component={AsyncEditCompApplication} />
       <Route path="/register-comp" component={AsyncRegisterCompApplication} />
+      <Route path="/client-apply-list" component={AsyncClientApplication} />
+      <Route path="/edit-client-apply" component={AsyncEditClientApplication} />
     </Switch>
   </Router>
 )

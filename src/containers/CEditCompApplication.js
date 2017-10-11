@@ -1,17 +1,22 @@
 import { connect } from 'react-redux'
 import EditCompApplication from '../components/EditCompApplication'
-import { updateACompApplyInfo } from '../actions/index'
+import { updateCurCompApplyPlan, deleteCurCompApplyPlan } from '../actions/index'
 
 const mapStateToProps = (state) => {
+  const { curMeetingInfo, curCompInfo } = state
   return {
-    curMeetingInfo: state.curMeetingInfo,
+    curMeetingInfo,
+    curCompInfo,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateACompApplyInfo: (comp, data) => {
-      dispatch(updateACompApplyInfo(comp, data))
+    updateCurCompApplyPlan: (data) => {
+      dispatch(updateCurCompApplyPlan(data))
+    },
+    deleteCurCompApplyPlan: (data) => {
+      dispatch(deleteCurCompApplyPlan(data))
     },
   }
 }
