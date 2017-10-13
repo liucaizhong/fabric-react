@@ -208,8 +208,9 @@ class EditCompApplication extends Component {
       <SelectUser
         onBack={this.closeSelectUser.bind(this)}
         editing={this.state.editing}
-        userRole="1"
+        url="/userListData.json"
         users={this.state.analyst}
+        multi
       /> :
       (
         <div>

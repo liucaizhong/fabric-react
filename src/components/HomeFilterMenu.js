@@ -13,7 +13,7 @@ class HomeFilterMenu extends Component {
 
   render() {
     const { onToggleMenu, onMenuChange } = this.props
-    const meetingStatus = [0, 1, 2, 3, 4, 5]
+    const meetingStatus = [0, 1, 2, 3, 4]
 
     return (
       <div
@@ -45,6 +45,7 @@ class HomeFilterMenu extends Component {
 HomeFilterMenu.propTypes = {
   onToggleMenu: PropTypes.func.isRequired,
   onMenuChange: PropTypes.func.isRequired,
+  checked: PropTypes.array.isRequired,
 }
 
 export default HomeFilterMenu

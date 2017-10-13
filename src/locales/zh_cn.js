@@ -117,4 +117,6 @@ module.exports = {
   'EditClientApplication.alertTitle0': '删除',
   'EditClientApplication.alertDesc0': '确定删除本条报名？',
   'SelectCustomer.searchBarPlaceholder': '搜索客户机构',
+  'Check.Status.text0': '未选中',
+  'Check.Status.text1': '已选中',
 }

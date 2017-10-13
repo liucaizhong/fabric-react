@@ -26,14 +26,17 @@ class EditClientApplication extends Component {
     this.history = props.history
     this.axisData = props.location.state.axisData
     console.log('this.axisData', this.axisData)
-    const data = props.location.state.data.d || props.location.state.data
+    let data = props.location.state.data
+    if (data && data.d) {
+      data = Object.assign({}, data.d)
+    }
 
     this.state = {
-      ...FIELDS.reduce((t, k) => {
+      ...(data ? FIELDS.reduce((t, k) => {
         return Object.assign(t, {
           [k]: data[k],
         })
-      }, {}),
+      }, {}) : {}),
       editing: props.location.state.editing,
       // showSelectUser: false,
       showSelectCustomer: false,
@@ -141,9 +144,21 @@ class EditClientApplication extends Component {
   }
 
   closeSelectCustomer([customer]) {
+    // todo...
+    console.log('back customer', customer)
+    const person = customer.persons[0]
+    const newCustomer = {
+      cid: customer.cid,
+      comp: customer.comp,
+      level: customer.level,
+      sales: customer.sales,
+      guest: person && person.name,
+      pid: person && person.id,
+      title: person && person.title,
+    }
     this.setState({
       showSelectCustomer: false,
-      ...customer,
+      ...newCustomer,
     })
   }
 
@@ -154,10 +169,13 @@ class EditClientApplication extends Component {
     return this.state.showSelectCustomer ?
       <SelectCustomer
         onBack={this.closeSelectCustomer.bind(this)}
-        level={0}
         customer={[{
           cid: this.state.cid,
-          pid: [this.state.pid],
+          persons: [{
+            id: this.state.pid,
+            name: this.state.guest,
+            title: this.state.title,
+          }],
         }]}
       />
       : (

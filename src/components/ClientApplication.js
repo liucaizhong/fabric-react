@@ -79,6 +79,7 @@ class ClientApplication extends Component {
                 pathname: '/edit-client-apply',
                 state: {
                   editing: true,
+                  axisData: this.axisData,
                 },
               }}
             >
