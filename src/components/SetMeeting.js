@@ -115,6 +115,10 @@ class SetMeeting extends Component {
       title: intl.formatMessage({
         id: 'Meeting.Status.text4',
       }),
+    }, {
+      title: intl.formatMessage({
+        id: 'Meeting.Status.text5',
+      }),
     }]
 
     return (

@@ -17,6 +17,7 @@
     "core-js": "^1.2.7",
     "css-loader": "0.28.4",
     "dotenv": "4.0.0",
+    "echarts": "^3.7.2",
     "es6-promise": "^4.1.1",
     "eslint": "3.19.0",
     "eslint-config-react-app": "^1.0.5",

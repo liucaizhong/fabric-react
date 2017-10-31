@@ -1,6 +1,7 @@
 // configure router
 import React from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router,
+  Route, Switch, Redirect } from 'react-router-dom'
 import AsyncComponent from '../components/AsyncComponent'
 
 const AsyncHome = AsyncComponent(
@@ -8,6 +9,9 @@ const AsyncHome = AsyncComponent(
 )
 const AsyncSetMeeting = AsyncComponent(
   () => import('../containers/CSetMeeting'),
+)
+const AsyncAutoSchedule = AsyncComponent(
+  () => import('../containers/CAutoSchedule'),
 )
 const AsyncSetMeetingDate = AsyncComponent(
   () => import('../containers/CSetMeetingDate'),
@@ -31,14 +35,32 @@ const AsyncClientApplication = AsyncComponent(
   () => import('../containers/CClientApplication'),
 )
 const AsyncEditClientApplication = AsyncComponent(
-  () => import('../components/EditClientApplication'),
+  () => import('../containers/CEditClientApplication'),
+)
+const AsyncMyAgenda = AsyncComponent(
+  () => import('../components/MyAgenda'),
 )
 
 const App = () => (
   <Router>
     <Switch>
-      <Route exact path="/" component={AsyncHome} />
+      <Route
+        exact
+        path="/"
+        render={() => {
+          return (
+            <Redirect
+              to={{
+                pathname: '/index',
+                hash: '#meetingList',
+              }}
+            />
+          )
+        }}
+      />
+      <Route path="/index" component={AsyncHome} />
       <Route path="/set-m" component={AsyncSetMeeting} />
+      <Route path="/schedule" component={AsyncAutoSchedule} />
       <Route path="/set-room" component={AsyncSetMeetingRoom} />
       <Route path="/set-m-d" component={AsyncSetMeetingDate} />
       <Route path="/apply" component={AsyncCompApplication} />
@@ -47,6 +69,7 @@ const App = () => (
       <Route path="/register-comp" component={AsyncRegisterCompApplication} />
       <Route path="/client-apply-list" component={AsyncClientApplication} />
       <Route path="/edit-client-apply" component={AsyncEditClientApplication} />
+      <Route path="/agenda" component={AsyncMyAgenda} />
     </Switch>
   </Router>
 )

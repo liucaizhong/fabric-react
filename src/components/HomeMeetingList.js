@@ -124,21 +124,41 @@ class HomeMeetingList extends Component {
           <div className="Home-meetingList__row-content">
             <div className="Home-meetingList__row-header">
               <span>{rowData.name}</span>
-              <Link
-                to={{
-                  pathname: '/set-m',
-                  search: `?m_id=${rowData.id}`,
-                }}
-                onClick={(e) => {
-                  e.stopPropagation()
-                  clickLink(rowData)
-                }}
-              >
-                {!roleId ? <Icon
-                  type={require('../assets/icons/edit-meeting.svg')}
-                  size="xs"
-                /> : null}
-              </Link>
+              {!roleId ?
+                <div>
+                  <Link
+                    to={{
+                      pathname: '/set-m',
+                      // search: `?m_id=${rowData.id}`,
+                    }}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      clickLink(rowData)
+                    }}
+                    style={{ marginRight: '0.22rem' }}
+                  >
+                    <Icon
+                      type={require('../assets/icons/edit-meeting.svg')}
+                      size="sm"
+                    />
+                  </Link>
+                  <Link
+                    to={{
+                      pathname: '/schedule',
+                      // search: `?m_id=${rowData.id}`,
+                    }}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      clickLink(rowData)
+                    }}
+                  >
+                    <Icon
+                      type={require('../assets/icons/run.svg')}
+                      size="sm"
+                    />
+                  </Link>
+                </div>
+              : null}
             </div>
             <p className="Home-meetingList__row-desc">{rowData.desc}</p>
             <div className="Home-meetingList__row-footer">

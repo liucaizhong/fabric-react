@@ -13,6 +13,8 @@ import userList from './userList'
 import clientApplyFilter from './clientApplyFilter'
 import clientApplyList from './clientApplyList'
 import customerList from './customerList'
+import compApplyStatusFilter from './compApplyStatusFilter'
+import clientApplyStatusFilter from './clientApplyStatusFilter'
 
 const rootReducer = combineReducers({
   meetingContentFilter,
@@ -29,6 +31,8 @@ const rootReducer = combineReducers({
   curCompApplyPlan,
   clientApplyList,
   customerList,
+  compApplyStatusFilter,
+  clientApplyStatusFilter,
 })
 
 export default rootReducer

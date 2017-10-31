@@ -25,6 +25,16 @@ export const setMeetingStatusFilter = makeActionCreator(
   TYPES.SET_MEETING_STATUS_FILTER,
   'filter',
 )
+// set filter for comp apply list status
+export const setCompApplyStatusFilter = makeActionCreator(
+  TYPES.SET_COMPAPPLY_STATUS_FILTER,
+  'filter',
+)
+// set filter for client apply list status
+export const setClientApplyStatusFilter = makeActionCreator(
+  TYPES.SET_CLIENTAPPLY_STATUS_FILTER,
+  'filter',
+)
 // set current meeting info
 export const setCurMeetingInfo = makeActionCreator(
   TYPES.SET_CUR_MEETING_INFO,
@@ -152,9 +162,19 @@ export const loadClientApplyList = makeActionCreator(
   TYPES.LOAD_CLIENTAPPLY_LIST,
   'data',
 )
+// update client application list
+export const updateClientApplyList = makeActionCreator(
+  TYPES.UPDATE_CLIENTAPPLY_LIST,
+  'data',
+)
 // delete client application list
 export const deleteClientApplyList = makeActionCreator(
   TYPES.DELETE_CLIENTAPPLY_LIST,
+  'data',
+)
+// reset client application list
+export const resetClientApplyList = makeActionCreator(
+  TYPES.RESET_CLIENTAPPLY_LIST,
   'data',
 )
 // get customer list

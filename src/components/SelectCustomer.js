@@ -355,7 +355,9 @@ class SelectCustomer extends Component {
           checked={rowData.checked}
         >
           <div className="Comp-applyList__row-content">
-            <span>{rowData.name}</span>
+            <div>
+              <span>{rowData.name}</span>
+            </div>
             <div>
               <span>{rowData.level}</span>
               <span>{rowData.type}</span>
@@ -422,6 +424,11 @@ class SelectCustomer extends Component {
           onToggleMenu={this.onToggleMenu.bind(this)}
           onMenuChange={this.onMenuChange.bind(this)}
           checked={this.state.checkedFilter}
+          checkId={[0, 1]}
+          checkStatus={[
+            'Check.Status.text0',
+            'Check.Status.text1',
+          ]}
         />
       : null,
     ]

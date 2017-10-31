@@ -6,7 +6,9 @@ import { List, Checkbox } from 'antd-mobile'
 class CheckFilterMenu extends Component {
   constructor(props) {
     super(props)
-    const { checked } = props
+    const checked = [...props.checked]
+    // const lastChecked = checked.pop()
+    // checked.push(lastChecked.mine)
     this.state = {
       checked,
     }
@@ -14,7 +16,7 @@ class CheckFilterMenu extends Component {
 
   onClickItem(status, idx) {
     const { onMenuChange } = this.props
-    const nextChecked = [].concat(this.state.checked)
+    const nextChecked = [...this.state.checked]
     nextChecked[idx] = status
     this.setState({
       checked: nextChecked,
@@ -23,8 +25,7 @@ class CheckFilterMenu extends Component {
   }
 
   render() {
-    const { onToggleMenu } = this.props
-    const checkStatus = [0, 1]
+    const { onToggleMenu, checkId, checkStatus, mine } = this.props
 
     return (
       <div
@@ -32,7 +33,18 @@ class CheckFilterMenu extends Component {
         onClick={onToggleMenu}
       >
         <List>
-          {checkStatus.map((val) => (
+          {mine ?
+            <Checkbox.CheckboxItem
+              key={checkId.length}
+              onClick={(e) => {
+                this.onClickItem(e.target.checked, checkId.length)
+              }}
+              checked={this.state.checked[checkId.length]}
+            >
+              <FormattedMessage id={'Common.mine'} />
+            </Checkbox.CheckboxItem>
+          : null}
+          {checkId.map((val) => (
             <Checkbox.CheckboxItem
               key={val}
               onClick={(e) => {
@@ -40,7 +52,7 @@ class CheckFilterMenu extends Component {
               }}
               checked={this.state.checked[val]}
             >
-              <FormattedMessage id={`Check.Status.text${val}`} />
+              <FormattedMessage id={checkStatus[val]} />
             </Checkbox.CheckboxItem>
           ))}
         </List>
@@ -52,11 +64,14 @@ class CheckFilterMenu extends Component {
 CheckFilterMenu.propTypes = {
   onToggleMenu: PropTypes.func.isRequired,
   onMenuChange: PropTypes.func.isRequired,
-  checked: PropTypes.array,
+  checked: PropTypes.array.isRequired,
+  checkId: PropTypes.array.isRequired,
+  checkStatus: PropTypes.array.isRequired,
+  mine: PropTypes.bool,
 }
 
 CheckFilterMenu.defaultProps = {
-  checked: [true, true],
+  mine: true,
 }
 
 export default CheckFilterMenu

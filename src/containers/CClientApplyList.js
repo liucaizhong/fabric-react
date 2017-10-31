@@ -1,16 +1,17 @@
 import { connect } from 'react-redux'
 import ClientApplyList from '../components/ClientApplyList'
-import { getClientApplyList, loadClientApplyList, deleteClientApplyList,
-  updateCurCompApplyPlanApplyList } from '../actions/index'
+import { getClientApplyList, loadClientApplyList,
+  deleteClientApplyList } from '../actions/index'
 
 const mapStateToProps = (state) => {
-  const { curMeetingInfo, curCompInfo,
+  const { curMeetingInfo, curCompInfo, clientApplyStatusFilter,
     clientApplyFilter, clientApplyList } = state
   return {
     curMeetingInfo,
     curCompInfo,
     clientApplyFilter,
     clientApplyList,
+    clientApplyStatusFilter,
   }
 }
 
@@ -24,9 +25,6 @@ const mapDispatchToProps = (dispatch) => {
     },
     deleteClientApplyList: (data) => {
       dispatch(deleteClientApplyList(data))
-    },
-    updateCurCompApplyPlanApplyList: (axis, data) => {
-      dispatch(updateCurCompApplyPlanApplyList(axis, data))
     },
   }
 }

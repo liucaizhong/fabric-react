@@ -4,7 +4,7 @@
     "name": "华夏幸福",
     "indus": "房地产",
     "code": "600340.SH",
-    "deadline": "20170906",
+    "status": "0",
     "createBy": "id-name-role"
   },
   {
@@ -12,7 +12,7 @@
     "name": "滨江集团",
     "indus": "房地产",
     "code": "002244.SZ",
-    "deadline": "20171025",
+    "status": "1",
     "createBy": "id-name-role"
   },
   {
@@ -20,7 +20,7 @@
     "name": "平安银行",
     "indus": "银行",
     "code": "000001.SZ",
-    "deadline": "20171025",
+    "status": "2",
     "createBy": "id-name-role"
   }
 ]

@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import RegisterCalendar from '../components/RegisterCalendar'
-import { getCurCompApplyPlan, resetCurCompApplyPlan } from '../actions/index'
+import { getCurCompApplyPlan, resetCurCompApplyPlan,
+  resetClientApplyList, setCurCompInfo } from '../actions/index'
 
 const mapStateToProps = (state) => {
   const { curMeetingInfo, curCompInfo, curCompApplyPlan } = state
@@ -19,6 +20,12 @@ const mapDispatchToProps = (dispatch) => {
     },
     resetCurCompApplyPlan: (data) => {
       dispatch(resetCurCompApplyPlan(data))
+    },
+    resetClientApplyList: (data) => {
+      dispatch(resetClientApplyList(data))
+    },
+    setCurCompInfo: (info) => {
+      dispatch(setCurCompInfo(info))
     },
   }
 }

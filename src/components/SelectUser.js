@@ -374,6 +374,11 @@ class SelectUser extends Component {
           onToggleMenu={this.onToggleMenu.bind(this)}
           onMenuChange={this.onMenuChange.bind(this)}
           checked={this.state.checkedFilter}
+          checkId={[0, 1]}
+          checkStatus={[
+            'Check.Status.text0',
+            'Check.Status.text1',
+          ]}
         />
       : null,
     ]

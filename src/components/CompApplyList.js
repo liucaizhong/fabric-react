@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { List, ListView, SwipeAction, Modal, Icon,
   RefreshControl, Toast } from 'antd-mobile'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
-import moment from 'moment'
+// import moment from 'moment'
 
 class CompApplyList extends Component {
   constructor(props) {
@@ -51,7 +51,8 @@ class CompApplyList extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { compApplyList } = this.props
-    const { compApplyList: nextCompApplyList, compApplyFilter } = nextProps
+    const { compApplyList: nextCompApplyList,
+      compApplyFilter, compApplyStatusFilter } = nextProps
     const preLen = compApplyList.length
     const delta = nextCompApplyList.length - preLen
 
@@ -59,10 +60,10 @@ class CompApplyList extends Component {
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(
           nextCompApplyList.filter((cur) => {
-            return cur.name.includes(compApplyFilter)
+            return (cur.name.includes(compApplyFilter)
             || cur.indus.includes(compApplyFilter)
-            || cur.code.includes(compApplyFilter)
-            || this.applyStatus(cur.deadline).text.includes(compApplyFilter)
+            || cur.code.includes(compApplyFilter))
+            && compApplyStatusFilter[cur.status]
           }),
         ),
         // isLoading: false,
@@ -87,25 +88,32 @@ class CompApplyList extends Component {
     this.lv.getInnerViewNode().removeEventListener('touchmove', this.tm)
   }
 
-  applyStatus = (deadline) => {
-    const { intl, curMeetingInfo } = this.props
-    const d0 = moment(curMeetingInfo.deadline, 'YYYYMMDD')
-    const d1 = moment(deadline, 'YYYYMMDD')
-    const d2 = moment()
-    const flag = d2 <= moment.max(d0, d1)
-    const text = flag
-    ? intl.formatMessage({
-      id: 'CompApplyList.applystatus0',
-    })
-    : intl.formatMessage({
-      id: 'CompApplyList.applystatus1',
-    })
+  // applyStatus = (deadline) => {
+  //   const { intl, curMeetingInfo } = this.props
+  //   const d0 = moment(curMeetingInfo.deadline, 'YYYYMMDD')
+  //   const d1 = moment(deadline, 'YYYYMMDD')
+  //   const d2 = moment()
+  //   const flag = d2 <= moment.max(d0, d1)
+  //   const text = flag
+  //   ? intl.formatMessage({
+  //     id: 'CompApplyList.applystatus0',
+  //   })
+  //   : intl.formatMessage({
+  //     id: 'CompApplyList.applystatus1',
+  //   })
+  //
+  //   return {
+  //     text,
+  //     flag,
+  //   }
+  // }
 
-    return {
-      text,
-      flag,
-    }
-  }
+  // filterStatus(flag, filter) {
+  //   const f0 = filter[0] || filter[1]
+  //   const f1 = (flag || false) === filter[0]
+  //   const f2 = (flag || false) === !filter[1]
+  //   return f0 && (f1 || f2)
+  // }
 
   // concatDateTimeStr = (rowData) => {
   //   return `${rowData.date} ${rowData.start}-${rowData.end}`
@@ -124,6 +132,22 @@ class CompApplyList extends Component {
 
   render() {
     const { intl, getCompApplyList } = this.props
+    const applyStatus = [{
+      text: intl.formatMessage({
+        id: 'CompApplyList.applystatus0',
+      }),
+      icon: require('../assets/icons/success.svg'),
+    }, {
+      text: intl.formatMessage({
+        id: 'CompApplyList.applystatus1',
+      }),
+      icon: require('../assets/icons/end.svg'),
+    }, {
+      text: intl.formatMessage({
+        id: 'CompApplyList.applystatus2',
+      }),
+      icon: require('../assets/icons/cross-fill.svg'),
+    }]
 
     const header = () => {
       if (this.state.showHeader) {
@@ -169,7 +193,7 @@ class CompApplyList extends Component {
 
     const row = (rowData, sectionID, rowID) => {
       const { updateCurCompInfo } = this.props
-      const applyStatus = this.applyStatus(rowData.deadline)
+      // const applyStatus = this.applyStatus(rowData.deadline)
 
       return (
         <SwipeAction
@@ -194,7 +218,7 @@ class CompApplyList extends Component {
                     id: 'Common.confirm',
                   }),
                   onPress: () => {
-                    if (applyStatus.flag) {
+                    if (rowData.status === '0') {
                       Toast.fail(
                         intl.formatMessage({
                           id: 'CompApplyList.error0',
@@ -205,11 +229,13 @@ class CompApplyList extends Component {
                       )
                     } else {
                       // todo: update database
-                      const deadline = moment().add(5, 'days').format('YYYYMMDD')
+                      // const deadline = moment().add(5, 'days').format('YYYYMMDD')
+                      // updateCurCompInfo({
+                      //   deadline,
+                      // })
                       updateCurCompInfo({
-                        deadline,
+                        status: '1',
                       })
-                      this.lv.forceUpdate()
                     }
                   },
                 }])
@@ -257,18 +283,17 @@ class CompApplyList extends Component {
             extra={
               <div className="Comp-applyList__row-extra">
                 <Icon
-                  type={applyStatus.flag
-                    ? require('../assets/icons/circular-green.svg')
-                    : require('../assets/icons/circular-red.svg')
-                  }
-                  size="xs"
+                  type={applyStatus[rowData.status].icon}
+                  size="md"
                 />
-                <span>{applyStatus.text}</span>
+                <span>{applyStatus[rowData.status].text}</span>
               </div>
             }
           >
             <div className="Comp-applyList__row-content">
-              <span>{rowData.name}</span>
+              <div>
+                <span>{rowData.name}</span>
+              </div>
               <div>
                 <span>{rowData.indus}</span>
                 <span>{rowData.code}</span>
@@ -346,7 +371,8 @@ CompApplyList.propTypes = {
   updateCurCompInfo: PropTypes.func.isRequired,
   compApplyList: PropTypes.array.isRequired,
   compApplyFilter: PropTypes.string.isRequired,
-  curMeetingInfo: PropTypes.object.isRequired,
+  // curMeetingInfo: PropTypes.object.isRequired,
+  compApplyStatusFilter: PropTypes.array.isRequired,
 }
 
 export default injectIntl(CompApplyList)

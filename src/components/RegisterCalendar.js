@@ -31,7 +31,9 @@ class RegisterCalendar extends Component {
 
   componentDidMount() {
     console.log('componentDidMount')
-    const { getCurCompApplyPlan, curCompApplyPlan } = this.props
+    const { getCurCompApplyPlan, curCompApplyPlan,
+      resetClientApplyList } = this.props
+    resetClientApplyList([])
     if (!this.state.editing || _.isEmpty(curCompApplyPlan)) {
       getCurCompApplyPlan('/compApplyPlan.json', {
         method: 'GET',
@@ -76,8 +78,9 @@ class RegisterCalendar extends Component {
   }
 
   onBack() {
-    const { resetCurCompApplyPlan } = this.props
+    const { resetCurCompApplyPlan, setCurCompInfo } = this.props
     resetCurCompApplyPlan({})
+    setCurCompInfo({})
     this.history.go(this.state.back2Step ? -2 : -1)
   }
 
@@ -223,6 +226,8 @@ RegisterCalendar.propTypes = {
   curCompApplyPlan: PropTypes.object.isRequired,
   getCurCompApplyPlan: PropTypes.func.isRequired,
   resetCurCompApplyPlan: PropTypes.func.isRequired,
+  resetClientApplyList: PropTypes.func.isRequired,
+  setCurCompInfo: PropTypes.func.isRequired,
 }
 
 export default injectIntl(RegisterCalendar)

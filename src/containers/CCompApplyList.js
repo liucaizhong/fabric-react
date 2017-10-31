@@ -4,11 +4,13 @@ import { getCompApplyList, setCurCompInfo,
   updateCurCompInfo } from '../actions/index'
 
 const mapStateToProps = (state) => {
-  const { compApplyList, compApplyFilter, curMeetingInfo } = state
+  const { compApplyList, compApplyFilter,
+    curMeetingInfo, compApplyStatusFilter } = state
   return {
     compApplyList,
     compApplyFilter,
     curMeetingInfo,
+    compApplyStatusFilter,
   }
 }
 

@@ -1,12 +1,14 @@
 import { connect } from 'react-redux'
 import _ from 'lodash'
 import CompApplication from '../components/CompApplication'
-import { setCompApplyFilter } from '../actions/index'
+import { setCompApplyFilter,
+  setCompApplyStatusFilter } from '../actions/index'
 
 const mapStateToProps = (state) => {
-  const { compApplyFilter } = state
+  const { compApplyFilter, compApplyStatusFilter } = state
   return {
     compApplyFilter,
+    compApplyStatusFilter,
   }
 }
 
@@ -18,6 +20,12 @@ const mapDispatchToProps = (dispatch) => {
     onChange: _.debounce((val) => {
       dispatch(setCompApplyFilter(val))
     }, 500),
+    onMenuChange: (val, idx) => {
+      dispatch(setCompApplyStatusFilter({
+        index: idx,
+        value: val,
+      }))
+    },
   }
 }
 

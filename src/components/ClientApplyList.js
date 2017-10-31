@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { findDOMNode } from 'react-dom'
 import PropTypes from 'prop-types'
-import { List, ListView, SwipeAction, Modal, RefreshControl } from 'antd-mobile'
+import { List, ListView, SwipeAction, Icon,
+  Modal, RefreshControl } from 'antd-mobile'
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl'
 
 class ClientApplyList extends Component {
@@ -48,7 +49,7 @@ class ClientApplyList extends Component {
   componentWillReceiveProps(nextProps) {
     const { clientApplyList } = this.props
     const { clientApplyList: nextClientApplyList,
-      clientApplyFilter } = nextProps
+      clientApplyFilter, clientApplyStatusFilter } = nextProps
     const preLen = clientApplyList.length
     const delta = nextClientApplyList.length - preLen
 
@@ -56,10 +57,11 @@ class ClientApplyList extends Component {
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(
           nextClientApplyList.filter((cur) => {
-            return cur.comp.includes(clientApplyFilter)
+            return (cur.comp.includes(clientApplyFilter)
             || cur.guest.includes(clientApplyFilter)
             || cur.level.includes(clientApplyFilter)
-            || cur.sales.includes(clientApplyFilter)
+            || cur.sales.includes(clientApplyFilter))
+            && clientApplyStatusFilter[cur.status]
           }),
         ),
         // isLoading: false,
@@ -82,12 +84,14 @@ class ClientApplyList extends Component {
   componentWillUnmount() {
     this.lv.getInnerViewNode().removeEventListener('touchstart', this.ts)
     this.lv.getInnerViewNode().removeEventListener('touchmove', this.tm)
-    // update application list of curCompApplyPlan
-    const { axisData, clientApplyList,
-      updateCurCompApplyPlanApplyList } = this.props
-    updateCurCompApplyPlanApplyList(axisData, clientApplyList)
   }
 
+  statusText(status) {
+    const { intl } = this.props
+    return intl.formatMessage({
+      id: `ClientApplyList.applystatus${status}`,
+    })
+  }
   // concatDateTimeStr = (rowData) => {
   //   return `${rowData.date} ${rowData.start}-${rowData.end}`
   // }
@@ -105,6 +109,13 @@ class ClientApplyList extends Component {
 
   render() {
     const { intl, getClientApplyList } = this.props
+    const statusIcon = [
+      require('../assets/icons/question.svg'),
+      require('../assets/icons/success.svg'),
+      require('../assets/icons/clock.svg'),
+      require('../assets/icons/end.svg'),
+      require('../assets/icons/cross-fill.svg'),
+    ]
 
     const header = () => {
       if (this.state.showHeader) {
@@ -194,13 +205,24 @@ class ClientApplyList extends Component {
           <List.Item
             className="Comp-applyList__row"
             onClick={this.clickListItem.bind(this, rowData)}
-            extra={rowData.sales}
+            extra={
+              <div className="Comp-applyList__row-extra">
+                <Icon
+                  type={statusIcon[rowData.status]}
+                  size="md"
+                />
+                <span>{this.statusText(rowData.status)}</span>
+              </div>
+            }
           >
             <div className="Comp-applyList__row-content">
-              <span>{rowData.comp}</span>
+              <div>
+                <span>{rowData.comp}</span>
+                <span>{rowData.level}</span>
+              </div>
               <div>
                 <span>{rowData.guest}</span>
-                <span>{rowData.level}</span>
+                <span>{rowData.sales}</span>
               </div>
             </div>
           </List.Item>
@@ -281,12 +303,13 @@ ClientApplyList.propTypes = {
   history: PropTypes.object.isRequired,
   // curMeetingInfo: PropTypes.object.isRequired,
   // curCompInfo: PropTypes.object.isRequired,
+  axisData: PropTypes.object.isRequired,
   clientApplyList: PropTypes.array.isRequired,
   clientApplyFilter: PropTypes.string.isRequired,
   getClientApplyList: PropTypes.func.isRequired,
   loadClientApplyList: PropTypes.func.isRequired,
   deleteClientApplyList: PropTypes.func.isRequired,
-  updateCurCompApplyPlanApplyList: PropTypes.func.isRequired,
+  clientApplyStatusFilter: PropTypes.array.isRequired,
 }
 
 export default injectIntl(ClientApplyList)

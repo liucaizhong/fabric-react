@@ -16,13 +16,14 @@ import { injectIntl, FormattedMessage, intlShape } from 'react-intl'
 import SelectCustomer from '../containers/CSelectCustomer'
 
 const FIELDS = ['id', 'cid', 'comp', 'level', 'pid', 'guest', 'title',
-  'sales', 'demand']
+  'sales', 'demand', 'status']
 
 class EditClientApplication extends Component {
   constructor(props) {
     super(props)
 
-    this.initialEditing = props.location.state.editing
+    this.initialEditing = props.location.state.initialEditing
+    this.add = props.location.state.add
     this.history = props.history
     this.axisData = props.location.state.axisData
     console.log('this.axisData', this.axisData)
@@ -37,7 +38,7 @@ class EditClientApplication extends Component {
           [k]: data[k],
         })
       }, {}) : {}),
-      editing: props.location.state.editing,
+      editing: props.location.state.editing || this.add,
       // showSelectUser: false,
       showSelectCustomer: false,
     }
@@ -45,7 +46,7 @@ class EditClientApplication extends Component {
   }
 
   onCancel() {
-    if (this.initialEditing) {
+    if (this.add) {
       this.history.goBack()
     } else {
       this.setState({
@@ -59,7 +60,7 @@ class EditClientApplication extends Component {
   }
 
   onSave() {
-    const { intl } = this.props
+    const { intl, updateClientApplyList } = this.props
     const data = {
       ...FIELDS.reduce((t, k) => {
         return Object.assign(t, {
@@ -68,6 +69,7 @@ class EditClientApplication extends Component {
       }, {}),
     }
 
+    console.log('data', data)
     // validate data
     // 0: empty data is not permitted
     const f = ((obj) => {
@@ -92,14 +94,18 @@ class EditClientApplication extends Component {
       // save new comp application
       console.log('save data', data)
       if (this.initialEditing) {
-        // updateCurCompApplyPlan(data)
-        // this.history.goBack()
+        updateClientApplyList(data)
+        this.history.goBack()
       } else {
         // todo: submit to database
-        // updateCurCompApplyPlan(data)
-        this.setState({
-          editing: !this.state.editing,
-        })
+        updateClientApplyList(data)
+        if (this.add) {
+          this.history.goBack()
+        } else {
+          this.setState({
+            editing: !this.state.editing,
+          })
+        }
       }
     }
   }
@@ -164,7 +170,7 @@ class EditClientApplication extends Component {
 
   render() {
     // const { intl, curMeetingInfo, curCompInfo } = this.props
-    const { intl } = this.props
+    const { intl, deleteClientApplyList } = this.props
 
     return this.state.showSelectCustomer ?
       <SelectCustomer
@@ -286,7 +292,7 @@ class EditClientApplication extends Component {
             />
           </List>
           <WhiteSpace size="md" />
-          {this.state.editing ?
+          {this.state.editing && !this.add ?
             <Button
               className="delBtnPanel"
               activeClassName="delBtnPanel__active"
@@ -308,20 +314,18 @@ class EditClientApplication extends Component {
                     console.log('confirm delete')
 
                     if (this.initialEditing) {
-                      // deleteCurCompApplyPlan({
-                      //   date,
-                      //   start,
-                      //   end,
-                      // })
-                      // this.history.goBack()
+                      deleteClientApplyList({
+                        cid: this.state.cid,
+                        pid: this.state.pid,
+                      })
+                      this.history.goBack()
                     } else {
                       // todo: submit to database
-                      // deleteCurCompApplyPlan({
-                      //   date,
-                      //   start,
-                      //   end,
-                      // })
-                      // this.history.goBack()
+                      deleteClientApplyList({
+                        cid: this.state.cid,
+                        pid: this.state.pid,
+                      })
+                      this.history.goBack()
                     }
                   },
                 }])
@@ -343,6 +347,8 @@ EditClientApplication.propTypes = {
   location: PropTypes.object.isRequired,
   // curMeetingInfo: PropTypes.object.isRequired,
   // curCompInfo: PropTypes.object.isRequired,
+  updateClientApplyList: PropTypes.func.isRequired,
+  deleteClientApplyList: PropTypes.func.isRequired,
 }
 
 export default injectIntl(EditClientApplication)

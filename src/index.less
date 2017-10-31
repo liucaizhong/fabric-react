@@ -50,6 +50,12 @@ body {
       margin-right: 0.16rem;
     }
   }
+
+  .home-searchbar__filterMenu {
+    .am-list .am-list-body > div:first-child::after {
+      display: none;
+    }
+  }
 }
 
 .home-setting__card {
@@ -125,6 +131,18 @@ body {
 
     .am-list-body {
       border-top: 0;
+
+      > div:first-child::after {
+        display: block;
+        position: absolute;
+        content: '';
+        left: 0;
+        bottom: 0;
+        right: auto;
+        top: auto;
+        width: 100%;
+        border-bottom: 1PX solid #81889C;
+      }
     }
 
     .am-list-item {
@@ -299,7 +317,7 @@ body {
               justify-content: flex-start;
 
               .Home-meetingList__row-header {
-                font-size: 0.3rem;
+                font-size: 0.32rem;
                 font-weight: bold;
                 display: flex;
                 flex-direction: row;
@@ -355,7 +373,7 @@ body {
 }
 
 .Setmeeting-list__div {
-  padding: 1rem 0 0.3rem 0;
+  padding: 1rem 0 0 0;
 }
 
 .Compapplication-navbar__div {
@@ -363,7 +381,7 @@ body {
 }
 
 .Comp-applylist__div {
-  padding-top: 1rem;
+  padding-top: 0.88rem;
   padding-bottom: 0.12rem;
 
   .am-list-header {
@@ -414,7 +432,7 @@ body {
           justify-content: flex-end;
 
           > span {
-            line-height: 1.3;
+            line-height: 1.6;
             padding-left: 0.1rem;
           }
         }
@@ -426,12 +444,19 @@ body {
         justify-content: flex-start;
         padding-left: 0.3rem;
 
-        > span {
+        > div:nth-child(1) {
           font-size: 0.3rem;
           font-weight: bold;
+
+          span:nth-child(2) {
+            font-size: 0.26rem;
+            font-weight: normal;
+            color: #989898;
+            margin-left: 0.2rem;
+          }
         }
 
-        > div {
+        > div:nth-child(2) {
           font-size: 0.26rem;
           font-weight: normal;
           color: #989898;
@@ -816,6 +841,58 @@ body {
     .am-icon {
       margin-top: 0.2rem;
       margin-right: 0.18rem;
+    }
+  }
+}
+
+.Autoschedule-result__div {
+  padding-top: 1.1rem;
+
+  .Autoschedule-result__icon {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+}
+
+.myagenda-div {
+  .am-card {
+    margin: .2rem .2rem 0 .2rem;
+    min-height: 3rem;
+
+    &:nth-child(2) {
+      margin-top: 1.08rem;;
+    }
+
+    &:last-child {
+      margin-bottom: 0.2rem;
+    }
+
+    .am-card-body {
+      border-top: none;
+    }
+
+    .am-card-header {
+      padding-top: 0.3rem;
+      .am-card-header-content {
+        .meetingcard {
+          display: flex;
+          flex-direction: column;
+
+          span:last-child {
+            font-size: 0.28rem;
+            line-height: 2;
+            color: #B4B6BB;
+          }
+        }
+      }
+
+      .am-card-header-extra {
+        align-self: start;
+      }
+    }
+
+    .am-card-body {
+      font-size: 0.38rem;
     }
   }
 }
