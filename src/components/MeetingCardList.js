@@ -6,13 +6,27 @@ class MeetingCardList extends Component {
   constructor(props) {
     super(props)
 
-    const { meetingList } = props
+    const { meetingList, contentFilter } = props
 
     this.state = {
       data: meetingList.filter((cur) => {
-        return cur.statusStep >= 2 && cur.statusStep < 5
+        return cur.statusStep >= 2 && cur.statusStep < 5 &&
+        (cur.name.includes(contentFilter) || cur.desc.includes(contentFilter)
+        || this.concatDatesStr(cur.dates).includes(contentFilter))
       }),
     }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { meetingList, contentFilter } = nextProps
+
+    this.setState({
+      data: meetingList.filter((cur) => {
+        return cur.statusStep >= 2 && cur.statusStep < 5 &&
+        (cur.name.includes(contentFilter) || cur.desc.includes(contentFilter)
+        || this.concatDatesStr(cur.dates).includes(contentFilter))
+      }),
+    })
   }
 
   concatDatesStr(dates) {
@@ -23,12 +37,20 @@ class MeetingCardList extends Component {
   }
 
   render() {
+    const { history, url } = this.props
+
     return this.state.data.map((cur, i) => {
       return (
         <Card
           key={i}
           onClick={() => {
             console.log('click the card')
+            history.push(url, {
+              state: {
+                meetingInfo: cur,
+              },
+            })
+            history.goForward()
           }}
         >
           <Card.Header
@@ -55,9 +77,10 @@ class MeetingCardList extends Component {
 }
 
 MeetingCardList.propTypes = {
-  // history: PropTypes.object.isRequired,
-  // url: PropTypes.string.isRequired,
+  history: PropTypes.object.isRequired,
+  url: PropTypes.string.isRequired,
   meetingList: PropTypes.array.isRequired,
+  contentFilter: PropTypes.string.isRequired,
 }
 
 export default MeetingCardList

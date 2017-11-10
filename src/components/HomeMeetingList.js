@@ -56,7 +56,8 @@ class HomeMeetingList extends Component {
         dataSource: this.state.dataSource.cloneWithRows(
           nextMeetingList.filter((cur) => {
             return statusFilter[cur.statusStep] &&
-          (cur.name.includes(contentFilter) || cur.desc.includes(contentFilter))
+          (cur.name.includes(contentFilter) || cur.desc.includes(contentFilter)
+          || this.concatDatesStr(cur.dates).includes(contentFilter))
           }),
         ),
         // refreshing: false,

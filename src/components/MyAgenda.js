@@ -41,6 +41,7 @@ class MyAgenda extends Component {
   }
 
   render() {
+    const { history } = this.props
     return (
       <div className="myagenda-div">
         <NavBar
@@ -84,8 +85,8 @@ class MyAgenda extends Component {
         </NavBar>
         <MeetingCardList
           history={history}
-          url="/nextJumpUrl"
-          filter={this.state.filter}
+          url="/agenda-calendar"
+          contentFilter={this.state.filter}
         />
       </div>
     )

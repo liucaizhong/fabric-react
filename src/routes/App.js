@@ -40,13 +40,20 @@ const AsyncEditClientApplication = AsyncComponent(
 const AsyncMyAgenda = AsyncComponent(
   () => import('../components/MyAgenda'),
 )
+const AsyncMyAgendaOfDays = AsyncComponent(
+  () => import('../components/MyAgendaOfDays'),
+)
+const AsyncScheduleManagement = AsyncComponent(
+  () => import('../components/ScheduleManagement'),
+)
 
 const App = () => (
   <Router>
     <Switch>
+      <Route exact path="/" component={AsyncScheduleManagement} />
       <Route
-        exact
-        path="/"
+        // exact
+        path="/home" // changed temperarily
         render={() => {
           return (
             <Redirect
@@ -70,6 +77,7 @@ const App = () => (
       <Route path="/client-apply-list" component={AsyncClientApplication} />
       <Route path="/edit-client-apply" component={AsyncEditClientApplication} />
       <Route path="/agenda" component={AsyncMyAgenda} />
+      <Route path="/agenda-calendar" component={AsyncMyAgendaOfDays} />
     </Switch>
   </Router>
 )
