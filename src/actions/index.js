@@ -188,3 +188,9 @@ export const loadCustomerList = makeActionCreator(
   TYPES.LOAD_CUSTOMER_LIST,
   'data',
 )
+// get comp schedule
+export const getCompSchedule = makeActionCreator(
+  TYPES.GET_COMP_SCHEDULE,
+  'url',
+  'config',
+)

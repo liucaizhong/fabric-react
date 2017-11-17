@@ -30,7 +30,7 @@ class RegisterCalendar extends Component {
   }
 
   componentDidMount() {
-    console.log('componentDidMount')
+    // console.log('componentDidMount')
     const { getCurCompApplyPlan, curCompApplyPlan,
       resetClientApplyList } = this.props
     resetClientApplyList([])
@@ -90,7 +90,7 @@ class RegisterCalendar extends Component {
 
   render() {
     const { curMeetingInfo, intl } = this.props
-    console.log('curMeetingInfo', curMeetingInfo)
+    // console.log('curMeetingInfo', curMeetingInfo)
 
     const dates = curMeetingInfo.dates || [{
       start: '09:00',

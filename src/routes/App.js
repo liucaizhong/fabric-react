@@ -46,14 +46,16 @@ const AsyncMyAgendaOfDays = AsyncComponent(
 const AsyncScheduleManagement = AsyncComponent(
   () => import('../components/ScheduleManagement'),
 )
+const AsyncCommission = AsyncComponent(
+  () => import('../components/Commission'),
+)
 
 const App = () => (
   <Router>
     <Switch>
-      <Route exact path="/" component={AsyncScheduleManagement} />
       <Route
-        // exact
-        path="/home" // changed temperarily
+        exact
+        path="/"
         render={() => {
           return (
             <Redirect
@@ -78,6 +80,8 @@ const App = () => (
       <Route path="/edit-client-apply" component={AsyncEditClientApplication} />
       <Route path="/agenda" component={AsyncMyAgenda} />
       <Route path="/agenda-calendar" component={AsyncMyAgendaOfDays} />
+      <Route path="/schedule-m" component={AsyncScheduleManagement} />
+      <Route path="/commission" component={AsyncCommission} />
     </Switch>
   </Router>
 )

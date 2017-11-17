@@ -46,9 +46,7 @@ class MeetingCardList extends Component {
           onClick={() => {
             console.log('click the card')
             history.push(url, {
-              state: {
-                meetingInfo: cur,
-              },
+              meetingInfo: cur,
             })
             history.goForward()
           }}
