@@ -1,16 +1,24 @@
 import { all, call, put, takeLatest, takeEvery } from 'redux-saga/effects'
-import { setLoginUser } from '../actions/index'
+// import { setLoginUser } from '../actions/index'
 import * as TYPES from '../actions/type'
 
 // get login info
 function* setUser() {
-  yield put(setLoginUser({
-    name: '刘蔡仲',
-    comp: '东方证券研究所',
-    // avatar: require('../assets/images/login-avatar.png'),
-    // 0: admin, 1: analyst, 2: sales
-    roleId: 0,
-  }))
+  yield put({
+    type: TYPES.SET_LOGIN_USER,
+    user: {
+      name: '刘蔡仲',
+      comp: '东方证券研究所',
+      roleId: 0,
+    },
+  })
+  // yield put(setLoginUser({
+  //   name: '刘蔡仲',
+  //   comp: '东方证券研究所',
+  //   // avatar: require('../assets/images/login-avatar.png'),
+  //   // 0: admin, 1: analyst, 2: sales
+  //   roleId: 0,
+  // }))
 }
 
 // fetch get

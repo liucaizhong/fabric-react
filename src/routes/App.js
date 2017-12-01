@@ -46,9 +46,6 @@ const AsyncMyAgendaOfDays = AsyncComponent(
 const AsyncScheduleManagement = AsyncComponent(
   () => import('../components/ScheduleManagement'),
 )
-const AsyncCommission = AsyncComponent(
-  () => import('../components/Commission'),
-)
 
 const App = () => (
   <Router>
@@ -81,7 +78,6 @@ const App = () => (
       <Route path="/agenda" component={AsyncMyAgenda} />
       <Route path="/agenda-calendar" component={AsyncMyAgendaOfDays} />
       <Route path="/schedule-m" component={AsyncScheduleManagement} />
-      <Route path="/commission" component={AsyncCommission} />
     </Switch>
   </Router>
 )
