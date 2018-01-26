@@ -107,14 +107,18 @@ class ScheduleManagement extends Component {
       this.initial = true
       const dayOfWeek = moment().day()
       const b6Width = document.getElementsByClassName('b6')[0].clientWidth
+      const rightWidth = document.getElementsByClassName('right')[0].clientWidth
+
       const scrollLeft = dayOfWeek ? dayOfWeek * b6Width : 7 * b6Width
 
       const b2Block = document.getElementById('b2-block')
-      b2Block.style.width = `${b6Width * 3}px`
+      // b2Block.style.width = `${b6Width * 3}px`
+      b2Block.style.width = `${rightWidth}px`
       b2Block.scrollLeft = scrollLeft
 
       const b4Block = document.getElementById('b4-block')
-      b4Block.style.width = `${b6Width * 3}px`
+      // b4Block.style.width = `${b6Width * 3}px`
+      b4Block.style.width = `${rightWidth}px`
       b4Block.scrollLeft = scrollLeft
 
       const b6Block = document.getElementById('b6-block')
